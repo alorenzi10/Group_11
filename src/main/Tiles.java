@@ -7,7 +7,7 @@ public class Tiles {
 	private static Tile[] tiles;
 	
 	public static void Inizializza() {				//per creare le tiles da riordinare
-		tiles=new Tile[132];
+		tiles=new Tile[132];						
 		Tile.Color[] colors=Tile.Color.values();
 		int bagtiles=0;
 		for(int i=0; i<colors.length;i++) {
@@ -22,7 +22,7 @@ public class Tiles {
 		}
 	}
 	
-	public static void Mischia(){
+	public static void Mischia(){ //unire con inizializza probabilmente convine (?)
 		
 		Random rand=new Random();
 		
