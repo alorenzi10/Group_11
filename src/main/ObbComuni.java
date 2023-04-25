@@ -14,7 +14,7 @@ public static boolean PuntiPersonali(Libreria libreria[][], int ncarta){ //nome 
 			  
 			  for(int riga=0; riga<6; riga++) { //controllo su riga
 					for(int colonna=1; colonna<5; colonna++) {
-						if(libreria[riga][colonna].equals(libreria[riga][colonna-1].toString())){
+						if(libreria[riga][colonna].equals(libreria[riga][colonna-1].toString())){ //.toString da sistemare come metodo
 							conta++;
 						}
 					}
@@ -35,9 +35,11 @@ public static boolean PuntiPersonali(Libreria libreria[][], int ncarta){ //nome 
 			  
 			  for(int riga=0; riga<6; riga++) { //controllo su riga
 					for(int colonna=2; colonna<4; colonna++) {
-						if((libreria[riga][colonna].toString().equals(libreria[riga][colonna+1].toString()))
+						if((libreria[riga][colonna].toString().equals(libreria[riga][colonna+1].toString())) //.toString da sistemare come metodo
 								&&(libreria[riga][colonna-2].toString().equals(libreria[riga][colonna-1].toString()))){
-							conta++;
+							if(libreria[riga][colonna].toString().equals(libreria[riga][colonna-2].toString())) {
+								conta++;
+							}
 						}
 					}
 				}
@@ -45,7 +47,9 @@ public static boolean PuntiPersonali(Libreria libreria[][], int ncarta){ //nome 
 					for(int riga=2; riga<5; riga++){
 						if((libreria[riga][colonna].toString().equals(libreria[riga+1][colonna].toString()))
 								&&(libreria[riga-2][colonna].toString().equals(libreria[riga-1][colonna].toString()))){
-							conta++;
+							if(libreria[riga][colonna].toString().equals(libreria[riga-2][colonna].toString())) {
+								conta++;
+							}
 						}
 					}
 				}
