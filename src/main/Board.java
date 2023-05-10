@@ -17,6 +17,7 @@ public class Board{
 		Tiles.Mischia();
 		Board.BoardSetUp(ngiocatori);
 		Board.StampaBoard();
+		Board.TesserePrendibili();
 	} 
 	 
 	
@@ -86,6 +87,19 @@ public class Board{
 				board[6][8]=Tiles.tiles[counter];
 				board[8][4]=Tiles.tiles[counter];
 				board[9][5]=Tiles.tiles[counter];
+			}
+		}
+	}
+	
+	public static void TesserePrendibili() {
+		//9x9 all'interno di 11x11
+		for(int x=0; x<11;x++) {
+			for(int y=0; y<11; y++) {
+				if(board[x][y]!=null) {
+					if(board[x+1][y]==null || board[x-1][y]==null || board[x][y+1]==null || board[x][y-1]==null) {
+						System.out.println("la tessera "+x+" "+y+" e' prendibile");
+					}
+				}
 			}
 		}
 	}

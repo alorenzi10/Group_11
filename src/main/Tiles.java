@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Tiles {
 	
-	private static Tile[] tiles;
+	public static Tile[] tiles;
 	
 	public static void Inizializza() {				//per creare le tiles da riordinare
 		tiles=new Tile[132];						
@@ -17,9 +17,9 @@ public class Tiles {
 				bagtiles++;
 			}
 		}
-		for(int i=0; i<132; i++) {
+		/*for(int i=0; i<132; i++) {
 			System.out.println(tiles[i]+" "+i);
-		}
+		}*/
 	}
 	
 	public static void Mischia(){ //unire con inizializza probabilmente convine (?)
@@ -32,9 +32,9 @@ public class Tiles {
 			tiles[r]=tiles[i];
 			tiles[i]=temp;
 		}
-		for(int i=0; i<132; i++) {
+		/*for(int i=0; i<132; i++) {
 			System.out.println(tiles[i]+" "+i);
-		}
+		}*/
 	}
 	
 }
