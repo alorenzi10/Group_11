@@ -1,15 +1,16 @@
 package main;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Board{
 	
 	private static int counter=0;
 	private static int righe=11;
 	private static int colonne=11;
-	
+	static Scanner input=new Scanner(System.in);
 	public static Tile[][] board=new Tile[righe][colonne];
-	public static Tile[] avanzate=new Tile[10]; //preso 10 perché non penso ne avanzino di più
+	public static boolean [][] prendibili= new boolean [righe][colonne];
 	
 	public static void Board(int ngiocatori){
 		
@@ -23,6 +24,7 @@ public class Board{
 	
 	public static void BoardSetUp(int ngiocatori) {
 		
+		Tile[] avanzate=new Tile[10]; //preso 10 perché non penso ne avanzino di più
 		int i=0;
 		for(int riga=0; riga<righe; riga++) {  //controlla pezzi avanzati e resetta tutto a null
 			for(int colonna=0; colonna<colonne; colonna++) {
@@ -70,38 +72,73 @@ public class Board{
 		board[8][6]=Tiles.tiles[++counter];
 		
 		if(ngiocatori>2) {
-			board[1][4]=Tiles.tiles[counter];
+			board[1][4]=Tiles.tiles[++counter];
 			board[3][3]=Tiles.tiles[++counter];
 			board[3][7]=Tiles.tiles[++counter];
-			board[4][9]=Tiles.tiles[counter];
-			board[6][1]=Tiles.tiles[counter];
+			board[4][9]=Tiles.tiles[++counter];
+			board[6][1]=Tiles.tiles[++counter];
 			board[7][3]=Tiles.tiles[++counter];
 			board[7][7]=Tiles.tiles[++counter];
 			board[9][6]=Tiles.tiles[++counter];
 			if(ngiocatori>3) {
-				board[1][5]=Tiles.tiles[counter];
-				board[2][6]=Tiles.tiles[counter];
-				board[4][2]=Tiles.tiles[counter];
-				board[5][1]=Tiles.tiles[counter];
-				board[5][9]=Tiles.tiles[counter];
-				board[6][8]=Tiles.tiles[counter];
-				board[8][4]=Tiles.tiles[counter];
-				board[9][5]=Tiles.tiles[counter];
+				board[1][5]=Tiles.tiles[++counter];
+				board[2][6]=Tiles.tiles[++counter];
+				board[4][2]=Tiles.tiles[++counter];
+				board[5][1]=Tiles.tiles[++counter];
+				board[5][9]=Tiles.tiles[++counter];
+				board[6][8]=Tiles.tiles[++counter];
+				board[8][4]=Tiles.tiles[++counter];
+				board[9][5]=Tiles.tiles[++counter];
 			}
 		}
 	}
 	
 	public static void TesserePrendibili() {
-		//9x9 all'interno di 11x11
+		
+		for(int riga=0; riga<prendibili.length; riga++) {
+			for(int colonna=0; colonna<prendibili[0].length; colonna++) {
+				prendibili[riga][colonna]=false;
+			}
+		}
 		for(int x=0; x<11;x++) {
 			for(int y=0; y<11; y++) {
 				if(board[x][y]!=null) {
 					if(board[x+1][y]==null || board[x-1][y]==null || board[x][y+1]==null || board[x][y-1]==null) {
-						System.out.println("la tessera "+x+" "+y+" e' prendibile");
+						prendibili[x][y]=true; //tavola di verità con le cordinate delle tessere prendibili
+						System.out.println("la tessera alla riga"+x+" e colonna "+y+" e' prendibile");
 					}
 				}
 			}
 		}
+	}
+	
+	public static void SceltaUtente() {
+		
+		Tile[] scelte=new Tile[3];
+		String risposta=new String();
+		boolean esiste=false;
+		int x,y;
+		int i=0;
+		System.out.println("Scegli le cordinate delle tessere che vuoi prendere");
+		do {
+			do {
+				x=input.nextInt();
+				y=input.nextInt();
+				if(prendibili[x][y]==true) {
+					scelte[i]=board[x][y]; //riceve tessera dalla board
+					board[x][y]=null;	//non c'è più la tessera sulla board
+					esiste=true; //condizione per passsare al prossimo step
+				}
+			}while((x>0 && x<10)&&(y>0 && y<10)&& esiste);
+			i++;
+			esiste=false;
+			System.out.println("vuoi selezionare un altra tessera? si/no");
+			risposta=input.next();
+			if(risposta.equals("no")) {
+				i=4;
+			}
+		}while(i<3);
+		//Libreria.aggiungiTiles(scelte);
 	}
 	
 	public static void StampaBoard() {
@@ -117,6 +154,7 @@ public class Board{
 				}
 			}
 		}
+		System.out.println(" ");
 	}
 }
 
