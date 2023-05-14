@@ -112,24 +112,31 @@ public class Board{
 		}
 	}
 	
-	public static void SceltaUtente() {
+	public static Tile[] SceltaUtente() {
 		
 		Tile[] scelte=new Tile[3];
 		String risposta=new String();
 		boolean esiste=false;
 		int x,y;
 		int i=0;
-		System.out.println("Scegli le cordinate delle tessere che vuoi prendere");
+		
 		do {
 			do {
+				do {
+				System.out.println("Scegli le cordinate delle tessere che vuoi prendere"); 
 				x=input.nextInt();
 				y=input.nextInt();
+				}while((x<0 || x>10) || (y<0 || y>10)); //da aggiungere metodo per verificare che siano adiacenti
 				if(prendibili[x][y]==true) {
-					scelte[i]=board[x][y]; //riceve tessera dalla board
+					Tile temp=board[x][y]; 
+					scelte[i]=temp;					//riceve tessera dalla board
 					board[x][y]=null;	//non c'è più la tessera sulla board
-					esiste=true; //condizione per passsare al prossimo step
+					esiste=false; //condizione per passsare al prossimo step
+				}else {
+					esiste=true;
+					System.out.println("Tessera non prendibile");
 				}
-			}while((x>0 && x<10)&&(y>0 && y<10)&& esiste);
+			}while(esiste);
 			i++;
 			esiste=false;
 			System.out.println("vuoi selezionare un altra tessera? si/no");
@@ -138,8 +145,10 @@ public class Board{
 				i=4;
 			}
 		}while(i<3);
-		//Libreria.aggiungiTiles(scelte);
+		StampaBoard();
+		return scelte;
 	}
+	
 	
 	public static void StampaBoard() {
 		

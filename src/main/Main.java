@@ -30,19 +30,30 @@ public class Main {
 		int cartacomune1, cartacomune2;
 		cartacomune1=ObbComuni.AssegnaCarta();
 		cartacomune2=ObbComuni.AssegnaCarta();
+		
 		Collections.shuffle(giocatori);
-		System.out.println("L'ordine di gioco sarà: ");
+		for(int i=0; i<n; i++) {
+			Tile[][] creazione= new Tile[6][5];
+			Libreria.librerie.add(creazione);
+		}
+		/*System.out.println("L'ordine di gioco sarà: ");
 		for(Player prova2: giocatori) {
 			System.out.println(prova2.nome+" "+ prova2.numeroobb);
 		}
-		System.out.println(cartacomune1+" "+ cartacomune2);
-		List<Libreria> librerie= new ArrayList<Libreria>();
+		
+		System.out.println(cartacomune1+" "+ cartacomune2); */
+		
+		/*List<Libreria> librerie= new ArrayList<Libreria>();
 		for(int i=0; i<n; i++) {
 			Libreria prova=new Libreria(i);
-			librerie.add(prova);
-		}
-		Board.Board(n);
+			librerie.add(prova); //stesso ordine dei giocatori (primo giocatore, prima libreria)
+		}*/
 		
+		Board.Board(n); //set up Board;
+		
+		int i=0; //turno giocatore
+		Tile[] provatessere=Board.SceltaUtente();
+		Libreria.aggiungiTiles(provatessere, i);
 		
 	}
 
