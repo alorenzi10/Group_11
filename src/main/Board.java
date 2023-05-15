@@ -128,15 +128,17 @@ public class Board{
 		
 		boolean invalido=false;
 		if(selezionate[1][0]!=0) {
-			if(!(((selezionate[0][0]==(selezionate[1][0]+1)||selezionate[0][0]==(selezionate[1][0]-1)&&selezionate[0][0]==selezionate[1][0]))
-						||((selezionate[0][1]==(selezionate[1][1]+1)||selezionate[0][1]==(selezionate[1][1]-1)&&selezionate[0][1]==selezionate[1][1])))){
+			if(!(((((selezionate[0][0]+1)==selezionate[1][0]||(selezionate[0][0]-1)==selezionate[1][0])&&selezionate[0][1]==selezionate[1][1])
+						||(((selezionate[0][1]+1)==selezionate[1][1]||(selezionate[0][1]-1)==selezionate[1][1])&&selezionate[0][0]==selezionate[1][0])))){
 				System.out.println("la seconda tessera non è allineata con la prima");
 				invalido=true;
+			}else {
+				System.out.println("top");
 			}
 		}
 		if(selezionate[2][0]!=0) {
-			if(!(((selezionate[0][0]==(selezionate[2][0]+2)||selezionate[0][0]==(selezionate[2][0]-2)&&selezionate[0][0]==selezionate[2][0]))
-						||((selezionate[0][1]==(selezionate[2][1]+2)||selezionate[0][1]==(selezionate[2][1]-2)&&selezionate[0][1]==selezionate[2][1])))){
+			if(!((((selezionate[0][0]==(selezionate[2][0]+2)||selezionate[0][0]==(selezionate[2][0]-2))&&selezionate[0][1]==selezionate[2][1])
+						||((selezionate[0][1]==(selezionate[2][1]+2)||selezionate[0][1]==(selezionate[2][1]-2))&&selezionate[0][0]==selezionate[2][0])))){
 				System.out.println("la terza tessera non è allineata con la prima");
 				invalido=true;
 			}
@@ -216,7 +218,7 @@ public class Board{
 			//da rimuovere coordinate prese da board
 			//i++; rimuovibile
 			counter++;
-			esiste=false;
+			//esiste=false;
 			if(counter<3){
 			System.out.println("vuoi selezionare un altra tessera? 'no' per uscire"); 
 			risposta=input.next();
