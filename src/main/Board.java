@@ -13,11 +13,9 @@ public class Board{
 	public static boolean [][] prendibili= new boolean [righe][colonne];
 	
 	public static void Board(int ngiocatori){
-		
 		Tiles.Inizializza(); //if primo giro
 		Tiles.Mischia();
 		Board.BoardSetUp(ngiocatori);
-		
 	} 
 	 
 	
@@ -111,41 +109,79 @@ public class Board{
 		}
 	}
 	
-	public static Tile[] SceltaUtente() {
+	public static void CombinazioniPossibili(int x, int y) {
+		System.out.println("la tessera scelta con cordinate "+x+":"+y);
+		
+	}
+	
+	public static Tile[] SceltaUtente(int giocatore) {
 		
 		Board.StampaBoard();
 		Board.TesserePrendibili();
+		int spaziliberi=Libreria.calcolaSpazi(giocatore);
+		System.out.println("Spazi liberi = "+spaziliberi);//DA AGGIUNGERE CONTROLLO PER RESETTARE BOARD IN CASO CI SIANO SOLO TILES SINGLE
 		Tile[] scelte=new Tile[3];
+		int[][] cordinatescelte= new int[2][2];
 		String risposta=new String();
 		boolean esiste=false;
 		int x,y;
 		int i=0;
-		
+		int counter=0;
+		boolean giascelta=false;
 		do {
+			counter++;
 			do {
 				do {
-				System.out.println("Scegli le cordinate delle tessere che vuoi prendere");  // problema se prende la stessa tessera
-				x=input.nextInt();
-				y=input.nextInt();
-				}while((x<0 || x>10) || (y<0 || y>10)); //da aggiungere metodo per verificare che siano adiacenti
-				if(prendibili[x][y]==true) {
-					Tile temp=board[x][y]; 
-					scelte[i]=temp;					//riceve tessera dalla board
+					giascelta=false;
+					System.out.println("Scegli le cordinate delle tessere che vuoi prendere");  
+					x=input.nextInt();
+					y=input.nextInt();
+					if(counter>1) {
+						if(cordinatescelte[0][0]==x || cordinatescelte[0][1]==y) { //per verificare non prenda stesse tessre
+							giascelta=true;
+						}else if(counter>2) {
+							if(cordinatescelte[1][0]==x || cordinatescelte[1][1]==y) {
+								giascelta=true;
+							}
+						}
+					}
+					if(giascelta) {
+						System.out.println("Non puoi prendere la tessera gia scelta");  
+					}
+					if(counter<3){
+						cordinatescelte[counter-1][0]=x;
+						cordinatescelte[counter-1][1]=y;
+					}
+					}while((x<0 || x>10) || (y<0 || y>10) || giascelta); //da aggiungere metodo per verificare che siano adiacenti
+				
+				if(prendibili[x][y]==true) { //controllo su combinazione?
+					Tile temp=board[x][y]; //per evitare stessa scelta si potrebbe mettere prendibili[x][y] = false ma poi come confronto combinazioni?
+					scelte[i]=temp;	//riceve tessera dalla board
 					board[x][y]=null;	//non c'è più la tessera sulla board
 					esiste=false; //condizione per passsare al prossimo step
 				}else {
 					esiste=true;
 					System.out.println("Tessera non prendibile");
-				}
-			}while(esiste);
+					}
+				}while(esiste);
+			
 			i++;
 			esiste=false;
-			System.out.println("vuoi selezionare un altra tessera? si/no"); //implementare uscita se gia a 3
+			if(counter<3){
+			System.out.println("vuoi selezionare un altra tessera? 'no' per uscire"); 
 			risposta=input.next();
 			if(risposta.equals("no")) {
 				i=4;
 			}
-		}while(i<3);
+			else {
+				if(counter==spaziliberi) {
+					System.out.println("Stai per riempire la libreria non puoi più prendere altre tessere");
+					i=4;
+				}
+			}
+			}
+			}while(i<3);
+		
 		StampaBoard();
 		return scelte;
 	}

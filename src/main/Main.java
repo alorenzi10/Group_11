@@ -27,7 +27,8 @@ public class Main {
 			giocatori.add(inserimento);
 		}
 		
-		int cartacomune1, cartacomune2;
+		int cartacomune1, cartacomune2; //aggiungi token per ogni carta (ngiocatori) 4-8 4-6-8 2-4-6-8
+		//token vittora si puo evitare creazione basta tenerne conto +1 punto per chi finisce per primo
 		cartacomune1=ObbComuni.AssegnaCarta();
 		cartacomune2=ObbComuni.AssegnaCarta();
 		
@@ -45,19 +46,23 @@ public class Main {
 		
 		/*List<Libreria> librerie= new ArrayList<Libreria>();
 		for(int i=0; i<n; i++) {
-			Libreria prova=new Libreria(i);
+			Libreria prova=new Libreria(i); //eliminabile
 			librerie.add(prova); //stesso ordine dei giocatori (primo giocatore, prima libreria)
-		}*/
-		
+		}*/ 
+		int turno=0;
+		boolean finegioco=true;
 		Board.Board(n); //set up Board;
-		
-		int i=0; //turno giocatore
-		Tile[] provatessere=Board.SceltaUtente();
-		Libreria.aggiungiTiles(provatessere, i);
-		provatessere=Board.SceltaUtente();
-		Libreria.aggiungiTiles(provatessere, i);
-		provatessere=Board.SceltaUtente();
-		Libreria.aggiungiTiles(provatessere, i);
+		while(finegioco) {
+			turno++;
+			System.out.println("E' iniziato il "+turno+" turno");
+			for(int i=0; i<n; i++){
+				System.out.println("Tocca al giocatore di nome "+giocatori.get(i).nome);
+				//ciclo for/ do while e aggiunta finite le tessere su board, finito il gioco e countdown se vince non l'ultimo del giro 
+				Tile[] provatessere=Board.SceltaUtente(i);
+				Libreria.aggiungiTiles(provatessere, i);
+			}
+		//controllo su common golas (come ne tengo traccia di chi l'ha gia fatto senza assegnare più punti
+		}
 	}
 
 }
