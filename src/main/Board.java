@@ -43,8 +43,8 @@ public class Board{
 			Random rand=new Random();
 			
 			for(int x=counter; x<132;x++) {
-				int r=x+rand.nextInt(132-counter);
-				Tile temp=Tiles.tiles[r];
+				int r=x+rand.nextInt(132-x);
+				Tile temp=Tiles.tiles[r]; //errore su r al secondo giro why?
 				Tiles.tiles[r]=Tiles.tiles[x];
 				Tiles.tiles[x]=temp;
 			}
@@ -90,7 +90,7 @@ public class Board{
 		}
 	}
 	
-	public static void TesserePrendibili() {
+	public static boolean TesserePrendibili() {
 		
 		for(int riga=0; riga<prendibili.length; riga++) {
 			for(int colonna=0; colonna<prendibili[0].length; colonna++) {
@@ -107,22 +107,37 @@ public class Board{
 				}
 			}
 		}
-	}
+		int counter=0;
+		for(int x=0; x<11;x++) {
+			for(int y=0; y<11; y++) {
+				if(prendibili[x][y]==true) {
+						if(prendibili[x+1][y]==true || prendibili[x-1][y]==true || prendibili [x][y+1]==true || prendibili[x][y-1]==true) {
+							counter++;
+						}
+					}
+				}
+			}
+		if(counter<1) {
+			System.out.println("Le tessere prendibili sono tutte singole bisogna sistemare la board");
+			return true;
+			}
+		return false;
+		}
 	
 	public static boolean ControlloScelta(int [][] selezionate) {
 		
 		boolean invalido=false;
 		if(selezionate[1][0]!=0) {
-			if(!((selezionate[0][0]==(selezionate[1][0]+1)||selezionate[0][0]==(selezionate[1][0]-1))
-				||(selezionate[0][1]==(selezionate[1][1]+1)||selezionate[0][1]==(selezionate[1][1]-1)))){
+			if(!(((selezionate[0][0]==(selezionate[1][0]+1)||selezionate[0][0]==(selezionate[1][0]-1)&&selezionate[0][0]==selezionate[1][0]))
+						||((selezionate[0][1]==(selezionate[1][1]+1)||selezionate[0][1]==(selezionate[1][1]-1)&&selezionate[0][1]==selezionate[1][1])))){
 				System.out.println("la seconda tessera non è allineata con la prima");
 				invalido=true;
 			}
 		}
 		if(selezionate[2][0]!=0) {
-			if(!((selezionate[0][0]==(selezionate[2][0]+2)||selezionate[0][0]==(selezionate[2][0]-2))
-						||(selezionate[0][1]==(selezionate[2][1]+2)||selezionate[0][1]==(selezionate[2][1]-2)))){
-				System.out.println("la seconda tessera non è allineata con la prima");
+			if(!(((selezionate[0][0]==(selezionate[2][0]+2)||selezionate[0][0]==(selezionate[2][0]-2)&&selezionate[0][0]==selezionate[2][0]))
+						||((selezionate[0][1]==(selezionate[2][1]+2)||selezionate[0][1]==(selezionate[2][1]-2)&&selezionate[0][1]==selezionate[2][1])))){
+				System.out.println("la terza tessera non è allineata con la prima");
 				invalido=true;
 			}
 		}
@@ -131,23 +146,39 @@ public class Board{
 	
 	public static Tile[] SceltaUtente(int giocatore) {
 		
+		boolean boardfinita=false;
 		boolean invalido=false;
-		do {
-		Board.StampaBoard();
-		Board.TesserePrendibili();
-		int spaziliberi=Libreria.calcolaSpazi(giocatore);
-		System.out.println("Spazi liberi = "+spaziliberi);//DA AGGIUNGERE CONTROLLO PER RESETTARE BOARD IN CASO CI SIANO SOLO TILES SINGLE
-		Tile[] scelte=new Tile[3];
 		int[][] cordinatescelte= new int[3][2];
-		String risposta=new String();
-		boolean esiste=false;
-		int x,y;
-		int i=0;
-		int counter=0;
-		boolean giascelta=false;
+		
+		do {//rinizio da capo se invalide tessere
+			
+			Board.StampaBoard();
+			boardfinita=Board.TesserePrendibili();
+			if(boardfinita) {
+				Board.BoardSetUp(giocatore);
+				Board.StampaBoard();
+			}
+			int spaziliberi=Libreria.calcolaSpazi(giocatore);
+			System.out.println("Spazi liberi = "+spaziliberi);
+		
+			Tile[] scelte=new Tile[3];
+			for(int i=0; i<3; i++) {
+				for(int z=0; z<2; z++) {
+					cordinatescelte[i][z]=0;
+				}
+			}
+			String risposta=new String();
+			boolean esiste=false;
+			int x,y; //coordinate
+			int counter=0;
+			boolean giascelta=false;
+			
 		do {
-			counter++;
+			 //per sapere a quante tessere siamo
+			
+			/////////
 			do {
+				/////////////
 				do {
 					giascelta=false;
 					System.out.println("Scegli le cordinate delle tessere che vuoi prendere");  
@@ -165,46 +196,55 @@ public class Board{
 					if(giascelta) {
 						System.out.println("Non puoi prendere la tessera gia scelta");  
 					}
-					cordinatescelte[counter-1][0]=x;
-					cordinatescelte[counter-1][1]=y;
+					cordinatescelte[counter][0]=x; //riempe matrice con le "3" coordinate
+					cordinatescelte[counter][1]=y;
 					
-					}while((x<0 || x>10) || (y<0 || y>10) || giascelta); //da aggiungere metodo per verificare che siano adiacenti
+					}while((x<0 || x>10) || (y<0 || y>10) || giascelta); //loop per scegliere cordinate esistenti e non uguali
+				////////////////
 				
-				if(prendibili[x][y]==true) { //controllo su combinazione?
-					Tile temp=board[x][y]; //per evitare stessa scelta si potrebbe mettere prendibili[x][y] = false ma poi come confronto combinazioni?
-					scelte[i]=temp;	//riceve tessera dalla board
-					board[x][y]=null;	//non c'è più la tessera sulla board
-					esiste=false; //condizione per passsare al prossimo step
+				if(prendibili[x][y]==true) {
+					Tile temp=board[x][y];
+					scelte[counter]=temp;	
+					//board[x][y]=null;	posso fare dopo grazie a matrice coordinate
+					esiste=false; 
 				}else {
 					esiste=true;
 					System.out.println("Tessera non prendibile");
 					}
-				}while(esiste);
-			
-			i++;
+				}while(esiste); //loop per scegliere tessere prendibili
+			//////
+			//da rimuovere coordinate prese da board
+			//i++; rimuovibile
+			counter++;
 			esiste=false;
 			if(counter<3){
 			System.out.println("vuoi selezionare un altra tessera? 'no' per uscire"); 
 			risposta=input.next();
 			if(risposta.equals("no")) {
-				i=4;
+				counter=4; //counter invece di i
 			}
 			else {
 				if(counter==spaziliberi) {
 					System.out.println("Stai per riempire la libreria non puoi più prendere altre tessere");
-					i=4;
+					counter=4; //counter invece di i
+					}
 				}
 			}
-			}
-			}while(i<3);
+			}while(counter<3); //loopa 3 volte (max prendibili)
+		
 		invalido=ControlloScelta(cordinatescelte);
 		if(invalido) {
 			System.out.println("Scegliere le tessere secondo le regole");
 		}else {
+			for(int i=0; i<3; i++) {
+				int a=cordinatescelte[i][0];
+				int b=cordinatescelte[i][1];
+				board[a][b]=null;
+			}
 			StampaBoard();
 			return scelte;
 		}
-		}while(invalido);
+		}while(invalido); //fa riniziare da capo
 		return null;
 	}
 	
