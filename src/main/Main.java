@@ -36,12 +36,12 @@ public class Main {
 			Tile[][] creazione= new Tile[6][5];
 			Libreria.librerie.add(creazione);
 		}
-		/*System.out.println("L'ordine di gioco sarà: ");
-		for(Player prova2: giocatori) {
+		//System.out.println("L'ordine di gioco sarà: ");
+		/*for(Player prova2: giocatori) {
 			System.out.println(prova2.nome+" "+ prova2.numeroobb);
-		}
+		}*/
 		
-		System.out.println(cartacomune1+" "+ cartacomune2); */
+		//System.out.println(cartacomune1+" "+ cartacomune2); 
 		
 		/*List<Libreria> librerie= new ArrayList<Libreria>();
 		for(int i=0; i<n; i++) {
@@ -54,7 +54,10 @@ public class Main {
 		int i=0; //turno giocatore
 		Tile[] provatessere=Board.SceltaUtente();
 		Libreria.aggiungiTiles(provatessere, i);
-		
+		provatessere=Board.SceltaUtente();
+		Libreria.aggiungiTiles(provatessere, i);
+		provatessere=Board.SceltaUtente();
+		Libreria.aggiungiTiles(provatessere, i);
 	}
 
 }

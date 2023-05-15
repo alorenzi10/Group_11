@@ -44,25 +44,44 @@ public class Libreria{ //da legare con giocatore
 				}
 			}
 		}
+		int libere=0;
+		int counter=0;
+		do {
 		System.out.println("Seleziona colonna in cui inserire 0-4");
 		test=in.nextInt(); //aggiungi ciclo controllo scelta e se colonna piena o si riempie e avanza qualche tessera
+		libere=0;
+		counter=0;
+		for(int i=0; i<selezionate.length;i++) {
+			if(selezionate[i]!=null) {
+				counter++;
+			}
+		}
+		
+		for(int x=0; x<righe; x++) {
+			if(libreria[x][test]==null) {
+				libere++;
+			}
+		}
+		}while(counter>libere);
+		
 		int y=0;
-		for(int x=0; x<selezionate.length; x++) {
-			if(selezionate[x]!=null) { //temporaneo
-			libreria[y][test]=selezionate[x];
-			y++;
+		for(int x=0; x<righe; x++) {
+			if(y<counter) {
+				if(libreria[x][test]==null) {
+					libreria[x][test]=selezionate[y];
+						y++;
+				}
 			}
 		}
 		
 		librerie.set(b, libreria);
-		stampaLibreria(b);
-		
+		stampaLibreria(b);	
 	}
 	
-	public static void stampaLibreria(int b) { //da inquadrare meglio output per farlo simmetrico
+	public static void stampaLibreria(int b) { 
 		
 		Tile[][] libreria=librerie.get(b);
-		for(int riga=0; riga<righe; riga++) { //da invertire stampa
+		for(int riga=righe-1; riga>=0; riga--) { //stampa invertita
 			System.out.println("");
 			for(int colonna=0; colonna<colonne; colonna++) {
 				if(libreria[riga][colonna]==null) {
@@ -72,6 +91,7 @@ public class Libreria{ //da legare con giocatore
 				}
 			}
 		}
+		System.out.println("");
 	}
 	
 	

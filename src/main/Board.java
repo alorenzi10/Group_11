@@ -17,8 +17,7 @@ public class Board{
 		Tiles.Inizializza(); //if primo giro
 		Tiles.Mischia();
 		Board.BoardSetUp(ngiocatori);
-		Board.StampaBoard();
-		Board.TesserePrendibili();
+		
 	} 
 	 
 	
@@ -114,6 +113,8 @@ public class Board{
 	
 	public static Tile[] SceltaUtente() {
 		
+		Board.StampaBoard();
+		Board.TesserePrendibili();
 		Tile[] scelte=new Tile[3];
 		String risposta=new String();
 		boolean esiste=false;
@@ -123,7 +124,7 @@ public class Board{
 		do {
 			do {
 				do {
-				System.out.println("Scegli le cordinate delle tessere che vuoi prendere"); 
+				System.out.println("Scegli le cordinate delle tessere che vuoi prendere");  // problema se prende la stessa tessera
 				x=input.nextInt();
 				y=input.nextInt();
 				}while((x<0 || x>10) || (y<0 || y>10)); //da aggiungere metodo per verificare che siano adiacenti
@@ -139,7 +140,7 @@ public class Board{
 			}while(esiste);
 			i++;
 			esiste=false;
-			System.out.println("vuoi selezionare un altra tessera? si/no");
+			System.out.println("vuoi selezionare un altra tessera? si/no"); //implementare uscita se gia a 3
 			risposta=input.next();
 			if(risposta.equals("no")) {
 				i=4;
