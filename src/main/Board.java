@@ -109,19 +109,36 @@ public class Board{
 		}
 	}
 	
-	public static void CombinazioniPossibili(int x, int y) {
-		System.out.println("la tessera scelta con cordinate "+x+":"+y);
+	public static boolean ControlloScelta(int [][] selezionate) {
 		
+		boolean invalido=false;
+		if(selezionate[1][0]!=0) {
+			if(!((selezionate[0][0]==(selezionate[1][0]+1)||selezionate[0][0]==(selezionate[1][0]-1))
+				||(selezionate[0][1]==(selezionate[1][1]+1)||selezionate[0][1]==(selezionate[1][1]-1)))){
+				System.out.println("la seconda tessera non è allineata con la prima");
+				invalido=true;
+			}
+		}
+		if(selezionate[2][0]!=0) {
+			if(!((selezionate[0][0]==(selezionate[2][0]+2)||selezionate[0][0]==(selezionate[2][0]-2))
+						||(selezionate[0][1]==(selezionate[2][1]+2)||selezionate[0][1]==(selezionate[2][1]-2)))){
+				System.out.println("la seconda tessera non è allineata con la prima");
+				invalido=true;
+			}
+		}
+		return invalido;
 	}
 	
 	public static Tile[] SceltaUtente(int giocatore) {
 		
+		boolean invalido=false;
+		do {
 		Board.StampaBoard();
 		Board.TesserePrendibili();
 		int spaziliberi=Libreria.calcolaSpazi(giocatore);
 		System.out.println("Spazi liberi = "+spaziliberi);//DA AGGIUNGERE CONTROLLO PER RESETTARE BOARD IN CASO CI SIANO SOLO TILES SINGLE
 		Tile[] scelte=new Tile[3];
-		int[][] cordinatescelte= new int[2][2];
+		int[][] cordinatescelte= new int[3][2];
 		String risposta=new String();
 		boolean esiste=false;
 		int x,y;
@@ -137,10 +154,10 @@ public class Board{
 					x=input.nextInt();
 					y=input.nextInt();
 					if(counter>1) {
-						if(cordinatescelte[0][0]==x || cordinatescelte[0][1]==y) { //per verificare non prenda stesse tessre
+						if(cordinatescelte[0][0]==x && cordinatescelte[0][1]==y) { //per verificare non prenda stesse tessre
 							giascelta=true;
 						}else if(counter>2) {
-							if(cordinatescelte[1][0]==x || cordinatescelte[1][1]==y) {
+							if(cordinatescelte[1][0]==x && cordinatescelte[1][1]==y) {
 								giascelta=true;
 							}
 						}
@@ -148,10 +165,9 @@ public class Board{
 					if(giascelta) {
 						System.out.println("Non puoi prendere la tessera gia scelta");  
 					}
-					if(counter<3){
-						cordinatescelte[counter-1][0]=x;
-						cordinatescelte[counter-1][1]=y;
-					}
+					cordinatescelte[counter-1][0]=x;
+					cordinatescelte[counter-1][1]=y;
+					
 					}while((x<0 || x>10) || (y<0 || y>10) || giascelta); //da aggiungere metodo per verificare che siano adiacenti
 				
 				if(prendibili[x][y]==true) { //controllo su combinazione?
@@ -181,13 +197,19 @@ public class Board{
 			}
 			}
 			}while(i<3);
-		
-		StampaBoard();
-		return scelte;
+		invalido=ControlloScelta(cordinatescelte);
+		if(invalido) {
+			System.out.println("Scegliere le tessere secondo le regole");
+		}else {
+			StampaBoard();
+			return scelte;
+		}
+		}while(invalido);
+		return null;
 	}
 	
 	
-	public static void StampaBoard() {
+	public static void StampaBoard() { //devo rendere più simmetrica
 		
 		for(int riga=0; riga<righe; riga++) {
 			System.out.println(" ");

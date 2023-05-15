@@ -55,6 +55,11 @@ public class Libreria{
 				counter++;
 			}
 		}
+		for(int x=0; x<righe; x++) {
+			if(libreria[x][test]==null) {
+				libere++;
+			}
+		}
 		}while(counter>libere);
 		
 		int y=0;

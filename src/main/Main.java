@@ -37,10 +37,10 @@ public class Main {
 			Tile[][] creazione= new Tile[6][5];
 			Libreria.librerie.add(creazione);
 		}
-		//System.out.println("L'ordine di gioco sarà: ");
-		/*for(Player prova2: giocatori) {
+		System.out.println("L'ordine di gioco sarà: ");
+		for(Player prova2: giocatori) {
 			System.out.println(prova2.nome+" "+ prova2.numeroobb);
-		}*/
+		}
 		
 		//System.out.println(cartacomune1+" "+ cartacomune2); 
 		
