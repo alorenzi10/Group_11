@@ -25,7 +25,7 @@ public class ObbComuni {
 				}
 			}
 		}while(esiste);
-		
+		Obbiettivo(valore);
 		estratto[i]=valore;
 		i++;
 		return valore;

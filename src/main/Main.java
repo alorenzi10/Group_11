@@ -90,6 +90,18 @@ public class Main {
 					giocatori.get(i).punti=punticarta2[contaCComuni2];
 					contaCComuni2--;
 				}
+				//libreriapiena->finegioco
+		}
+			//to do list 
+			//tessere adiacenti
+			//cartecomuni 
+			//guida giocatore 
+			//rendere simmetricooutput
+			//gestisci input che non CRASH
+			//dividi in pacchetti
+//			
+		for(int i=0; i<n; i++){
+			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i), giocatori.get(i).numeroobb);
 		}
 		//controllo su personal goal
 			//e tessere adiacenti
