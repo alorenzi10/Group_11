@@ -247,6 +247,7 @@ public class Board{
 		}while(invalido); //fa riniziare da capo
 		return null;
 	}
+    //prova
 	
 	
 	public static void StampaBoard() { //devo rendere più simmetrica
