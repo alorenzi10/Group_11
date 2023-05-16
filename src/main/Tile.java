@@ -2,7 +2,7 @@ package main;
 
 public class Tile { //per ora non credo serva aggiungere altro
 	
-	private final Color color;
+	public final Color color;
 	
 	public Tile(final Color color) { //costruttore 
 		this.color=color; 

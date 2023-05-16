@@ -132,8 +132,6 @@ public class Board{
 						||(((selezionate[0][1]+1)==selezionate[1][1]||(selezionate[0][1]-1)==selezionate[1][1])&&selezionate[0][0]==selezionate[1][0])))){
 				System.out.println("la seconda tessera non è allineata con la prima");
 				invalido=true;
-			}else {
-				System.out.println("top");
 			}
 		}
 		if(selezionate[2][0]!=0) {
