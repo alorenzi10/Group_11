@@ -45,8 +45,10 @@ public class ObbPersonale {
 		for(int riga=0; riga<6; riga++){
 			for(int colonna=0; colonna<5; colonna++){
 				if(confronto[riga][colonna]!=null) {
-					if(confronto[riga][colonna].equals(libreria[riga][colonna])) {
+					if(libreria[riga][colonna]!=null) {
+					if((confronto[riga][colonna].getColor()).equals(libreria[riga][colonna].getColor())) {
 						punti++;
+					}
 					}
 				}
 				
@@ -168,6 +170,7 @@ public class ObbPersonale {
 			break;
 			
 		}
+		confronti.add(libreria);
 			for(int riga=6-1; riga>=0; riga--) { //stampa invertita
 				System.out.println("");
 				for(int colonna=0; colonna<5; colonna++) {
