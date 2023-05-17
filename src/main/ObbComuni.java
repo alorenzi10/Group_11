@@ -93,7 +93,7 @@ public class ObbComuni {
 						}
 					}
 				}
-			  if(conta>3) {
+			  if(conta>3) {  //forse è meglio rinizializzare la variabile conta altrimenti conta anche gli altri switch-case
 				  realizzato=true;
 			  }
 		    break;
@@ -104,35 +104,252 @@ public class ObbComuni {
 		    
 		    break;
 		  case 4:
-		    
+			  conta=0;
+			  for(int riga=0; riga<6; riga++) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna+1].getColor())
+							  &&libreria[riga][colonna+1].getColor().equals(libreria[riga+1][colonna].getColor())) {
+						  conta++;
+					  }
+				  }
+			  }
+			  
+			  if(conta>1) {
+				  realizzato = true;
+			  }
 		    break;
 		  case 5:
+			  conta=0;
+			  boolean condizione=false; //verifica che la colonna abbia le proprietà stabilite (2 tessere uguali x3 all'interno della colonna)
+			  int contaTess=0;  //conta le tessere verificate
+			  for(int colonna =0; colonna<5; colonna++) {
+				  for(int riga= 0; riga<6; riga++) {
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga-1][colonna].getColor())
+						    &&libreria[riga -1][colonna].getColor()!=libreria[riga -2][colonna].getColor()) {
+							  contaTess++;
+						 
+					  }
+					  if(contaTess>=3) {
+						  condizione=true;
+					  }
+					  
+				  }
+			  }
+			  do {
+				  
+			  for(int riga=0; riga<6; riga++) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  
+						  if(libreria[riga][colonna]==libreria[riga][colonna+1]) {
+							  conta++;
+						  }
+						  
+					  
+				  }
+			  }
+			  
+			  }while(condizione);
+			  
+			  if(conta>3) {
+				  realizzato = true;
+			  }
+			  
 		    
 		    break;
 		  case 6:
+			  conta=0;
+			  //8 tessere uguali non è importante l'ordine
+			  for(int riga=6; riga>0;riga--) {
+				  for(int colonna=5; colonna>0; colonna--) {  //controllo su riga
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga][colonna-1].getColor())) { //devono essere 8 oppure va bene se sono più di 8 tessere
+						  conta++;
+						  }
+					  }
+						  
+				  }
+			  if (conta>=8) {
+				  realizzato = true;
+			  }
 		    
 		    break;
 		  case 7:
+			  conta=0;
+			  //5 tessere uguali che formano una diagonale 
+			  for(int riga=6; riga>0; riga--) {  //controllo diagonale da coordinate 6,5 a 2,1
+				  for(int colonna=5; colonna>0; colonna--) {
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga-1][colonna-1].getColor())) {
+						  conta++;
+					  }
+					  
+				  }
+			  }
+			  for(int riga=6; riga>0; riga--) { //controllo diagonale da coordinate 6,1  a 2,5
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga-1][colonna+1].getColor())) {
+						  conta++;
+					  }
+					  
+				  }
+			  }
+			  for(int riga=0; riga<6; riga++) { //controllo diagonale da coordinate 1,1 a 5,5
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna+1].getColor())) {
+						  conta++;
+					  }
+					  
+				  }
+			  }
+			  for(int riga=4; riga<0; riga++) {//controllo diagonale da coordinate 5,1 a 1,5
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga-1][colonna+1].getColor())) {
+						  conta++;
+					  }
+				  }
+			  }
+			  
+			  if(conta>=1) {
+				  realizzato=true;
+			  }
 		    
 		    break;
 		  case 8:
+			  conta=0;
+			  boolean condizioneRiga=false; //verifica che la riga abbia le proprietà stabilite (massimo 3 tipi di tessere per riga)
+			  int contaTessRiga=0;  //conta le tessere verificate
+			  for(int riga =6; riga>0; riga--) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor().equals(libreria[riga][colonna-1].getColor())) {
+						  contaTessRiga++;
+						  if(libreria[riga][colonna-1].getColor()!=libreria[riga][colonna-1].getColor()) {
+							  contaTessRiga++;
+						  }
+					  }
+					  if(contaTessRiga==3 && contaTessRiga==2) {
+						  condizioneRiga=true;
+					  }else {
+						  realizzato=false;
+					  }
+					  
+				  }
+			  }
+			  do {
+				  
+			  for(int riga=0; riga<6; riga++) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  
+						  if(libreria[riga][colonna]==libreria[riga-1][colonna]) {
+							  conta++;
+						  }
+						  
+					  
+				  }
+			  }
+			  
+			  }while(condizioneRiga);
+			  
+			  if(conta>=4) {
+				  realizzato = true;
+			  } 
 			    
 			break;
 		  case 9:
+			  conta=0;
+			  boolean verificaRiga=false;
+			  for(int riga=0; riga<6; riga++) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor()!=libreria[riga][colonna+1].getColor()) {
+						  verificaRiga=true;
+					  }
+				  }
+			  }
+			  do {
+				  for(int riga=0; riga<6; riga++) {
+					  for(int colonna=0; colonna<5; colonna++) {
+						  if(libreria[riga][colonna].equals(libreria[riga+1][colonna])) {
+							  conta++;
+						  }
+					  }
+				  }
+			  }while(verificaRiga);
+			  
+			  if(conta>=2) {
+				  realizzato=true;
+			  }
 			    
 			break;
 		  case 10:
+			  conta=0;
+			  boolean verificaColonna=false;
+			  for(int riga=0; riga<6; riga++) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor()!=libreria[riga+1][colonna].getColor()) {
+						  verificaColonna=true;
+					  }
+				  }
+			  }
+			  do {
+				  for(int riga=0; riga<6; riga++) {
+					  for(int colonna=0; colonna<5; colonna++) {
+						  if(libreria[riga][colonna].equals(libreria[riga][colonna+1])) {
+							  conta++;
+						  }
+					  }
+				  }
+			  }while(verificaColonna);
+			  
+			  if(conta>=2) {
+				  realizzato=true;
+			  }
+			  
 			    
 			break;
 		  case 11:
+			  //controllo tessere posizionate a x
+			  int contaRiga=0;
+			  
+			  for(int riga=0; riga<6; riga+=2) { //controllo prima combinazione
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor()!=(libreria[riga][colonna+1].getColor())
+							  && libreria[riga][colonna].getColor().equals(libreria[riga][colonna+2].getColor())){
+						 contaRiga++;
+					  }
+				  }
+			  }
+			  for(int riga=1; riga<6; riga+=2) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor()!=(libreria[riga][colonna+1].getColor())
+							  && libreria[riga][colonna+1].getColor().equals(libreria[riga][colonna+2].getColor())){
+						  contaRiga++;
+						  
+					  }
+						  
+				  }
+				  
+			  }
+			  for(int riga=0; riga<6; riga+=2) { //controllo seconda combinazione
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor()!=libreria[riga][colonna+1].getColor()
+						  && libreria[riga][colonna].getColor().equals(libreria[riga][colonna+2].getColor())){
+						  contaRiga++;
+					  }
+				  }
+			  }
+			  for(int riga=1; riga<6; riga+=2) {
+				  for(int colonna=0; colonna<5; colonna++) {
+					  if(libreria[riga][colonna].getColor()!=libreria[riga][colonna+1].getColor()
+						  && libreria[riga][colonna+1].getColor().equals(libreria[riga][colonna+3].getColor())) {
+						  contaRiga++;
+					  }
+				  }
+			  }
+			  if(contaRiga>=1) {
+				  realizzato=true;
+			  }
+			  
 			    
 			break;
 		  case 12:
-			   	for(int colonna=0; colonna<4; colonna++) {
-			   		for(int riga=0; riga<5; riga++) {
-			   			
-			   		}
-			   	}
+			  
 			break;
 
 		}
