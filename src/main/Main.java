@@ -14,7 +14,10 @@ public class Main {
 		System.out.println("In quanti volete giocare? da 2 a 4");
 		do {
 		n=input.nextInt();
-		}while(n<2 && n>4);
+		if (n<2 || n>4){
+			Sysrem.out.println("ATTENZIONE! Inserire un numero di giocatori compreso tra 2 e 4");
+		}
+		}while(n<2 || n>4);
 
 		List<Player> giocatori= new ArrayList<Player>();
 		for(int i=0; i<n; i++) {
