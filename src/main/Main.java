@@ -10,17 +10,19 @@ public class Main {
 		
 		Scanner input=new Scanner(System.in);
 		
+		//Lettura numero di giocatori
 		int n;
 		System.out.println("In quanti volete giocare? da 2 a 4");
 		do {
 		n=input.nextInt();
 		}while(n<2 && n>4);
-
+		
+		//Vengono creati i profili dei giocatori
 		List<Player> giocatori= new ArrayList<Player>();
 		for(int i=0; i<n; i++) {
 			String nome=new String();
 			int cartaobb;
-			System.out.println("Inserisci nome del giocatore "+(1+i));
+			System.out.println("Inserisci nome del giocatore "+(1+i)+": ");
 			nome=input.next();
 			cartaobb=ObbPersonale.AssegnaCarta();
 			ObbPersonale.Obbiettivo(cartaobb);
