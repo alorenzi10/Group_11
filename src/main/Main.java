@@ -76,7 +76,7 @@ public class Main {
 		Board.Board(n); //set up Board;
 		while(finegioco) {
 			turno++;
-			System.out.println("E' iniziato il "+turno+" turno");
+			System.out.println("E' iniziato il "+turno+"° turno");
 			for(int i=0; i<n; i++){
 				System.out.println("Tocca al giocatore di nome "+giocatori.get(i).nome);
 				//ciclo for/ do while e aggiunta finite le tessere su board, finito il gioco e countdown se vince non l'ultimo del giro 
