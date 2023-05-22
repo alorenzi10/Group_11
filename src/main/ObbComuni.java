@@ -349,7 +349,39 @@ public class ObbComuni {
 			    
 			break;
 		  case 12:
-			  
+			 int continua=0;
+			 for(int riga=0; riga<6; riga++) {
+				 for(int colonna=0; colonna<5; colonna++) {
+					 if(libreria[riga][colonna].getColor()==null 
+							 && libreria[riga][colonna+1].getColor()==null) {
+						 continua++;
+					 }
+					 if(libreria[riga+1][colonna].getColor()!=null
+							 && libreria[riga][colonna+1].getColor()==null){
+						 continua++;
+							 
+						 }
+					 if(libreria[riga+2][colonna].getColor()!=null
+							 && libreria[riga][colonna+2].getColor()==null) {
+						 continua++;
+					 }
+					 if(libreria[riga+3][colonna].getColor()!=null
+							 && libreria[riga][colonna+3].getColor()==null) {
+						 continua++;
+					 }
+					 if(libreria[riga+4][colonna].getColor()!=null
+							 && libreria[riga][colonna+4].getColor()==null) {
+						 continua++;
+					 }
+					 if(libreria[riga+5][colonna].getColor()!=null) {
+						 continua++;
+					 }
+					 
+				 }
+			 }
+			 if(continua>=6) {
+				 realizzato=true;
+			 }
 			break;
 
 		}
