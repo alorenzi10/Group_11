@@ -70,8 +70,10 @@ public class ObbPersonale {
 		Tile.Color pink=colors[4];
 		Tile.Color light=colors[5];
 		
+		
 		switch (numerocarta) { //alternativa allo switch?
 		  case 1:
+			  
 			  libreria[5][0]=new Tile(pink);//pink
 			  libreria[2][1]=new Tile(yellow);//yellow
 			  libreria[0][2]=new Tile(light);//lightblu
@@ -171,13 +173,23 @@ public class ObbPersonale {
 			
 		}
 		confronti.add(libreria);
+
+		String spazio = "            ";
+		String separatore="|";
 			for(int riga=6-1; riga>=0; riga--) { //stampa invertita
 				System.out.println("");
 				for(int colonna=0; colonna<5; colonna++) {
+					
 					if(libreria[riga][colonna]==null) {
-						System.out.print("|        |");
+						System.out.print(separatore+spazio+separatore);
 					}else {
-					System.out.print("|"+libreria[riga][colonna].getColor()+"|");
+						String sLibreria = libreria[riga][colonna].getColor().toString();
+						int lunghezzaSpazio =spazio.length();
+						int lunghezzaLibreria = sLibreria.length();
+						int spaziDopo = lunghezzaSpazio - lunghezzaLibreria;
+
+		                String rigaTesto = separatore+sLibreria + spazio.substring(0, spaziDopo) +separatore;
+		                System.out.print(rigaTesto);
 					}
 				}
 			}

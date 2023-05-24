@@ -92,7 +92,10 @@ public class Main {
 					giocatori.get(i).punti=punticarta2[contaCComuni2];
 					contaCComuni2--;
 				}
+				
 				//libreriapiena->finegioco
+				
+				
 		}
 			//to do list 
 			//tessere adiacenti

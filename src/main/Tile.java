@@ -22,7 +22,7 @@ public class Tile { //per ora non credo serva aggiungere altro
 	}
 	
 	public String toString() {
-		return color+"";
+		return color.toString(); 
 	}
 	
 	

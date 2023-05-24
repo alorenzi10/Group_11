@@ -181,7 +181,7 @@ public class Board{
 				/////////////
 				do {
 					giascelta=false;
-					System.out.println("Scegli le cordinate delle tessere che vuoi prendere");  
+					System.out.print("Scegli le cordinate delle tessere che vuoi prendere(es 2 4): ");  
 					x=input.nextInt();
 					y=input.nextInt();
 					if(counter>1) {
@@ -218,7 +218,7 @@ public class Board{
 			counter++;
 			//esiste=false;
 			if(counter<3){
-			System.out.println("vuoi selezionare un altra tessera? 'no' per uscire"); 
+			System.out.print("vuoi selezionare un altra tessera? 'no' per uscire: " ); 
 			risposta=input.next();
 			if(risposta.equals("no")) {
 				counter=4; //counter invece di i
@@ -251,7 +251,24 @@ public class Board{
 	
 	
 	public static void StampaBoard() { //devo rendere più simmetrica
-		
+	
+	String cornice = "***********"+
+		           	 "***********"+
+		           	 "***********"+
+		           	"***********"+
+		           	"***********"+
+		           	"***********"+
+		           	"***********"+
+		           	"***********"+
+		           	"***********"+
+		           	"***********"+
+		           	"***********";
+	int lungCornice = cornice.length();
+	int calcolaSpazio= lungCornice/2; //riga superiore
+	String corniceRiga= cornice.substring(0,calcolaSpazio);
+	
+	System.out.println(corniceRiga);
+
 		for(int riga=0; riga<righe; riga++) {
 			System.out.println(" ");
 			for(int colonna=0; colonna<colonne; colonna++) {
@@ -263,7 +280,9 @@ public class Board{
 				}
 			}
 		}
+		
 		System.out.println(" ");
+	System.out.println(corniceRiga);
 	}
 }
 

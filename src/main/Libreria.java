@@ -46,8 +46,12 @@ public class Libreria{
 		int libere=0;
 		int counter=0;
 		do {
+			
+		do {
 		System.out.println("Seleziona colonna in cui inserire 0-4"); //aggiungi commento in caso di errore colonna
 		test=in.nextInt(); 
+		}while(test<0 || test>4);
+		
 		libere=0;
 		counter=0;
 		for(int i=0; i<selezionate.length;i++) {
@@ -80,17 +84,29 @@ public class Libreria{
 	
 	public static void stampaLibreria(int b) { 
 		
+	
 		Tile[][] libreria=librerie.get(b);
+		String spazio = "            ";
+		String separatore="|";
+		
 		for(int riga=righe-1; riga>=0; riga--) { //stampa invertita
 			System.out.println("");
 			for(int colonna=0; colonna<colonne; colonna++) {
+				
 				if(libreria[riga][colonna]==null) {
-					System.out.print("|        |");
+					System.out.print(separatore+spazio+separatore);
 				}else {
-				System.out.print("|"+libreria[riga][colonna].getColor()+"|");
+					String stringColore= libreria[riga][colonna].getColor().toString();
+					int lunghezzaSpazio=spazio.length();
+					int lungColore=stringColore.length();
+					int calcolaSpazio=lunghezzaSpazio - lungColore;
+	                String rigaTesto= separatore+stringColore+spazio.substring(0, calcolaSpazio)+separatore;
+	                System.out.print(rigaTesto);
 				}
+				
 			}
 		}
+		
 		System.out.println("");
 	}
 	
