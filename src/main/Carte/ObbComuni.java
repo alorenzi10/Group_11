@@ -1,7 +1,9 @@
-package main;
+package main.Carte;
 
 import java.util.Arrays;
 import java.util.Random;
+
+import main.Tessere.Tile;
 
 public class ObbComuni {
 							//da usare durante la partita per capire l'ordine dei punti 2-4-6-8
@@ -546,6 +548,8 @@ public class ObbComuni {
 			  		+ "must be made of exactly one more tile.\r\n"
 			  		+ "Tiles can be of any type. "); 
 			break;
+			
 		}
+		System.out.println("");
 	}
 }

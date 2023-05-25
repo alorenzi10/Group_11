@@ -1,4 +1,4 @@
-package main;
+package main.Tessere;
 
 public class Tile { //per ora non credo serva aggiungere altro
 	
@@ -8,7 +8,7 @@ public class Tile { //per ora non credo serva aggiungere altro
 		this.color=color; 
 	}
 	
-	enum Color{
+	public enum Color{
 		
 		Green, White, Yellow, Blue, Pink, LightBlue; //tipologia di tessere
 		private static final Color[] colors=Color.values();

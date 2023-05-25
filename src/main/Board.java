@@ -3,6 +3,9 @@ package main;
 import java.util.Random;
 import java.util.Scanner;
 
+import main.Tessere.Tile;
+import main.Tessere.Tiles;
+
 public class Board{
 	
 	private static int counter=0;
@@ -159,7 +162,7 @@ public class Board{
 				Board.StampaBoard();
 			}
 			int spaziliberi=Libreria.calcolaSpazi(giocatore);
-			System.out.println("Spazi liberi = "+spaziliberi);
+			System.out.println("Spazi liberi della tua libreria = "+spaziliberi);
 		
 			Tile[] scelte=new Tile[3];
 			for(int i=0; i<3; i++) {
@@ -181,8 +184,10 @@ public class Board{
 				/////////////
 				do {
 					giascelta=false;
-					System.out.print("Scegli le cordinate delle tessere che vuoi prendere(es 2 4): ");  
+					System.out.println("Scegli le cordinate delle tessere che vuoi prendere");  
+					System.out.println("Scegli la riga e premere invio");  
 					x=input.nextInt();
+					System.out.println("Scegli la colonna e premere invio");  
 					y=input.nextInt();
 					if(counter>1) {
 						if(cordinatescelte[0][0]==x && cordinatescelte[0][1]==y) { //per verificare non prenda stesse tessre
@@ -234,7 +239,8 @@ public class Board{
 		
 		invalido=ControlloScelta(cordinatescelte);
 		if(invalido) {
-			System.out.println("Scegliere le tessere secondo le regole");
+			System.out.println("Scegliere solo le tessere prendibili e adiacenti");
+			System.out.println("Effettua nuovamente la scelta");
 		}else {
 			for(int i=0; i<3; i++) {
 				int a=cordinatescelte[i][0];
@@ -252,37 +258,40 @@ public class Board{
 	
 	public static void StampaBoard() { //devo rendere più simmetrica
 	
-	String cornice = "***********"+
-		           	 "***********"+
-		           	 "***********"+
-		           	"***********"+
-		           	"***********"+
-		           	"***********"+
-		           	"***********"+
-		           	"***********"+
-		           	"***********"+
-		           	"***********"+
-		           	"***********";
-	int lungCornice = cornice.length();
-	int calcolaSpazio= lungCornice/2; //riga superiore
-	String corniceRiga= cornice.substring(0,calcolaSpazio);
+	String cornice = "__________"+"__________"+"__________"+
+			"__________"+"__________"+"__________"+"__________"+
+			"__________"+"__________";
 	
-	System.out.println(corniceRiga);
+	System.out.println(cornice);
 
-		for(int riga=0; riga<righe; riga++) {
-			System.out.println(" ");
-			for(int colonna=0; colonna<colonne; colonna++) {
+		for(int riga=1; riga<righe-1; riga++) {
+			
+			for(int colonna=1; colonna<colonne-1; colonna++) {
 				if(board[riga][colonna]==null) {
-					System.out.print("     ");
+					System.out.print("         |");
 				}
 				else {
-				System.out.print(board[riga][colonna].getColor()+" ");
+				int lunghezza=board[riga][colonna].getColor().toString().length();
+				
+				if(lunghezza==5) {
+				System.out.print(board[riga][colonna].getColor()+"    "+"|");
+				}
+				if(lunghezza==4) {
+					System.out.print(board[riga][colonna].getColor()+"     "+"|");
+					}
+				if(lunghezza==9) {
+					System.out.print(board[riga][colonna].getColor()+"|");
+					}
+				if(lunghezza==6) {
+					System.out.print(board[riga][colonna].getColor()+"   "+"|");
+					} 
 				}
 			}
+			
+			System.out.println(" ");
+			
 		}
-		
-		System.out.println(" ");
-	System.out.println(corniceRiga);
+		System.out.println(cornice);
 	}
 }
 

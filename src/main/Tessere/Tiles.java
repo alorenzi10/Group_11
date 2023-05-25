@@ -1,4 +1,4 @@
-package main;
+package main.Tessere;
 
 import java.util.Random;
 

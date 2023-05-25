@@ -1,8 +1,10 @@
-package main;
+package main.Carte;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import main.Tessere.Tile;
 
 public class ObbPersonale { 
 	

@@ -5,25 +5,51 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import main.Carte.ObbComuni;
+import main.Carte.ObbPersonale;
+import main.Giocatore.Player;
+import main.Tessere.Tile;
+
 public class Main {
 	public static void main(String[] args){
 		
 		Scanner input=new Scanner(System.in);
 		
 		//Lettura numero di giocatori
-		int n;
-		System.out.println("In quanti volete giocare? da 2 a 4");
-		do {
-		n=input.nextInt();
-		}while(n<2 && n>4);
+		boolean userInt=false;
+		int n=0;
+		do { //aggiunto dopo
+			System.out.println("In quanti volete giocare? da 2 a 4");
+			try {
+				n=Integer.parseInt(input.nextLine());
+				userInt=true;
+			}
+			catch(NumberFormatException e) {
+				System.out.println("L'input non e' valido, riprova");
+				userInt=false;
+			}
+		}while(n<2 || n>4 || !userInt);
 		
 		//Vengono creati i profili dei giocatori
 		List<Player> giocatori= new ArrayList<Player>();
 		for(int i=0; i<n; i++) {
 			String nome=new String();
 			int cartaobb;
+			do {
+				userInt=true;
 			System.out.println("Inserisci nome del giocatore "+(1+i)+": ");
 			nome=input.next();
+			for(int y=0; y<giocatori.size(); y++) {
+				if(giocatori.get(y).nome!=null) {
+					if(giocatori.get(y).nome.equals(nome)) {
+						userInt=false;
+				}
+			}
+			}
+			if(!userInt) {
+				System.out.println("Si prega di non inserire nomi uguali");
+				}
+			}while(!userInt);
 			cartaobb=ObbPersonale.AssegnaCarta();
 			ObbPersonale.Obbiettivo(cartaobb);
 			Player inserimento=new Player(nome, cartaobb);
@@ -32,6 +58,7 @@ public class Main {
 		
 		int cartacomune1, cartacomune2; 
 		boolean primo=false;
+		System.out.println("");
 		cartacomune1=ObbComuni.AssegnaCarta();
 		cartacomune2=ObbComuni.AssegnaCarta();
 		int [] punticarta1= new int[4];
@@ -57,19 +84,10 @@ public class Main {
 			Tile[][] creazione= new Tile[6][5];
 			Libreria.librerie.add(creazione);
 		}
-		System.out.println("L'ordine di gioco sarà: ");
+		System.out.println("L'ordine di gioco sara': ");
 		for(Player prova2: giocatori) {
-			System.out.println(prova2.nome+" "+ prova2.numeroobb);
-		}
-		//System.out.println(cartacomune1+" "+ cartacomune2); 
-		//ObbComuni.Obbiettivi(cartacomune1);
-		//ObbComuni.Obbiettivi(cartacomune2);
-		
-		/*List<Libreria> librerie= new ArrayList<Libreria>();
-		for(int i=0; i<n; i++) {
-			Libreria prova=new Libreria(i); //eliminabile
-			librerie.add(prova); //stesso ordine dei giocatori (primo giocatore, prima libreria)
-		}*/ 
+			System.out.println(prova2.nome);
+		} 
 		
 		int turno=0;
 		boolean finegioco=true;
@@ -78,7 +96,7 @@ public class Main {
 		Board.Board(n); //set up Board;
 		while(finegioco) {
 			turno++;
-			System.out.println("E' iniziato il "+turno+"° turno");
+			System.out.println("E' iniziato il "+turno+" turno");
 			for(int i=0; i<n; i++){
 				System.out.println("Tocca al giocatore di nome "+giocatori.get(i).nome);
 				//ciclo for/ do while e aggiunta finite le tessere su board, finito il gioco e countdown se vince non l'ultimo del giro 

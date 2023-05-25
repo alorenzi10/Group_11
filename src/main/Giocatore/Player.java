@@ -1,4 +1,4 @@
-package main;
+package main.Giocatore;
 
 public class Player {
 	
