@@ -51,425 +51,390 @@ public class ObbComuni {
 			return realizzato;
 		}
 		
-		switch (ncarta) { //alternativa allo switch?
-		  case 1: //non sicuro che funzioni ma idea  //ordine delle immagini delle istruzioni 
+		switch (ncarta) { 
+		  case 1:  ///funziona
 		  if(libreria!=null) {
 			  for(int riga=0; riga<6; riga++) { //controllo su riga
 					for(int colonna=1; colonna<5; colonna++) {
-				
-						if((libreria[riga][colonna].getColor()).equals(libreria[riga][colonna-1].getColor())){ //.toString da sistemare come metodo
-							conta++;
+						if(libreria[riga][colonna]!=null && libreria[riga][colonna-1]!=null) {
+							if((libreria[riga][colonna].getColor()).equals(libreria[riga][colonna-1].getColor())){ //.toString da sistemare come metodo
+								conta++;
+							}
 						}
-						
 					}
 				}
 			  for(int colonna=0; colonna<5; colonna++) { //controllo su colonna
 					for(int riga=1; riga<6; riga++){
-						
-						if((libreria[riga][colonna].getColor()).equals(libreria[riga-1][colonna].getColor())){
-							conta++;
+						if(libreria[riga][colonna]!=null && libreria[riga-1][colonna]!=null) {
+							if((libreria[riga][colonna].getColor()).equals(libreria[riga-1][colonna].getColor())){
+								conta++;
+							}
 						}
-						
 					}
 				}
+		  }
 			  if(conta>5) {
 				  realizzato=true;
 			  }
 		
-		    break;
-		  }else {
-			  break;
-		  }
-		  case 2: //non sicuro che funzioni ma idea
+		   break;
+		  
+		  case 2: ///funziona
 	      if(libreria!=null) {
 			  conta=0;
 			  for(int riga=0; riga<6; riga++) { //controllo su riga
-					for(int colonna=2; colonna<5; colonna++) {
-		
+					for(int colonna=2; colonna<4; colonna++) {
+						if(libreria[riga][colonna]!=null && libreria[riga][colonna+1]!=null && libreria[riga][colonna-2]!=null
+								&& libreria[riga][colonna-1]!=null) {
 						if((libreria[riga][colonna].getColor().equals(libreria[riga][colonna+1].getColor())) //.toString da sistemare come metodo
 								&&(libreria[riga][colonna-2].getColor().equals(libreria[riga][colonna-1].getColor()))){
 							if(libreria[riga][colonna].getColor().equals(libreria[riga][colonna-2].getColor())) {
 								conta++;
 							}
 						}
-						
+						}
 					}
 				}
 			  for(int colonna=0; colonna<5; colonna++) { //controllo su colonna
 					for(int riga=2; riga<5; riga++){
+						if(libreria[riga][colonna]!=null && libreria[riga+1][colonna]!=null && libreria[riga-2][colonna]!=null
+								&& libreria[riga-1][colonna]!=null) {
 						if((libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna].getColor()))
 								&&(libreria[riga-2][colonna].getColor().equals(libreria[riga-1][colonna].getColor()))){
 							if(libreria[riga][colonna].getColor().equals(libreria[riga-2][colonna].getColor())) {
 								conta++;
 							}
 						}
+						}
 					}
 				}
 			  if(conta>3) {  //forse è meglio rinizializzare la variabile conta altrimenti conta anche gli altri switch-case
 				  realizzato=true;
 			  }
-		    break;
-	      }else {
-	    	  break;
 	      }
-		  case 3:
+		    break;
+	      
+		  case 3:///funziona
 		  if(libreria!=null) {
+			  if(libreria[0][0]!=null && libreria[5][0]!=null && libreria[0][4]!=null && libreria[5][4]!=null) {
 			  if((libreria[0][0].getColor()==libreria[5][0].getColor())&&(libreria[0][4].getColor()==libreria[5][4].getColor())) {
 				  realizzato=true;
+			  }
 			  }
 		    
 		    break;
 		  }else {
 			  break;
 		  }
-		  case 4:
+		  case 4:///funziona 
 		  if(libreria!=null) {
 			  conta=0;
-			  for(int riga=0; riga<6; riga++) {
-				  for(int colonna=0; colonna<5; colonna++) {
-					 
+			  for(int riga=0; riga<5; riga++) {
+				  for(int colonna=0; colonna<4; colonna++) {
+					 if(libreria[riga][colonna]!=null && libreria[riga+1][colonna+1]!=null &&
+							  libreria[riga][colonna+1]!=null && libreria[riga+1][colonna]!=null) {
 					  if(libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna+1].getColor())
 							  &&libreria[riga][colonna+1].getColor().equals(libreria[riga+1][colonna].getColor())) {
 						  conta++;
 					  }
-					 
+				  }
 				  }
 			  }
 			  
 			  if(conta>1) {
 				  realizzato = true;
 			  }
-			  
-		    break;
-		  }else {
-			  break;
 		  }
-		  case 5:
+		    break;
+		 
+		  case 5: //funziona
+			 int z=0;
 		  if(libreria!=null) {
 			  conta=0;
-			  boolean condizione=false; //verifica che la colonna abbia le proprietà stabilite (2 tessere uguali x3 all'interno della colonna)
-			  int contaTess=0;  //conta le tessere verificate
-			  for(int colonna =0; colonna<5; colonna++) {
-				  for(int riga= 0; riga<6; riga++) {
-					  if(libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna].getColor())
-						    &&libreria[riga +1][colonna].getColor()!=libreria[riga +2][colonna].getColor()) {
-							  contaTess++;
-						 
-					  }else {
-						  realizzato=false;
-					  }
-					  if(contaTess>=3) {
-						  condizione=true;
-					  }
-					  
+			  int [] piene= new int [5];
+			  Tile [] tipologia =new Tile [3];
+			  
+			  for(int colonna=0; colonna<5; colonna++) {
+				  if(libreria[0][colonna]!=null && libreria[1][colonna]!=null && libreria[2][colonna]!=null && libreria[3][colonna]!=null &&
+						  libreria[4][colonna]!=null && libreria[5][colonna]!=null) {
+					  piene[conta]=colonna;
+					  conta+=1;
+				  	}
 				  }
-			  }
-			  do {
-				  
-			  for(int riga=0; riga<6; riga++) {
-				  for(int colonna=0; colonna<5; colonna++) {
-					  
-						  if(libreria[riga][colonna]==libreria[riga][colonna+1]) {
-							  conta++;
+			  if(conta>2) {
+				  for(int y=0; y<5; y++) {
+					  for(int riga=0; riga<6; riga++) {
+						  if(tipologia[0]==null ) {
+							  tipologia[0]=libreria[riga][piene[y]];
+							  z++;
 						  }
-						  
-					  
-				  }
+						  else {
+								  if(tipologia[1]==null && libreria[riga][piene[y]]!=null) {
+									  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor()) {
+										  tipologia[1]=libreria[riga][piene[y]];
+										  z++;
+									  }
+								  }else {
+									  if(tipologia[2]==null && libreria[riga][piene[y]]!=null) {
+										  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor() && tipologia[1].getColor()!=libreria[riga][piene[y]].getColor() ) {
+											  tipologia[2]=libreria[riga][piene[y]];
+											  z++;
+										  }
+									  }
+									  else {
+										  if(libreria[riga][piene[y]]!=null) {
+										  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor() && tipologia[1].getColor()!=libreria[riga][piene[y]].getColor()
+												  && tipologia[2].getColor()!=libreria[riga][piene[y]].getColor()) {
+											  z++;
+										  }
+										  }
+									  }
+								  }
+						}
+					 }
+			}
+			}
+			  else {
+				  z=4;
 			  }
-			  
-			  }while(condizione && realizzato);
-			  
-			  if(conta>3) {
+			if(z<4) {
+				realizzato=true;
+			}
+			else {
+				realizzato=false;
+			}
+		  	}
+		  break;
+		 
+		  case 6: //funziona
+		  if(libreria!=null) {
+			  int  pink = 0, blu= 0, lightblue= 0, yellow= 0, green= 0, white= 0;
+			  for(int riga=0; riga<6;riga++) {
+				  for(int colonna=0; colonna<5; colonna++){
+					  if(libreria[riga][colonna]!= null) {
+						  if(libreria[riga][colonna].toString().equals("Pink")) {
+							  pink+=1;
+						  }
+						  if(libreria[riga][colonna].toString().equals("Blu")) {
+							  blu+=1;
+						  }
+						  if(libreria[riga][colonna].toString().equals("Lightblue")) {
+							  lightblue+=1;
+						  }
+						  if(libreria[riga][colonna].toString().equals("Yellow")) {
+							  yellow+=1;
+						  }
+						  if(libreria[riga][colonna].toString().equals("Green")) {
+							  green+=1;
+						  }
+						  if(libreria[riga][colonna].toString().equals("White")) {
+							  white+=1;
+						  }
+						  }
+					  }
+						  
+				  }
+			  if (blu>7 || pink>7 || lightblue>7 || yellow>7 || green>7 || white>7 ) {
 				  realizzato = true;
 			  }
-		    break;
-		  }else {
-			  break;
 		  }
-		  case 6:
-		  if(libreria!=null) {
-			  conta=0;
-			  //8 tessere uguali non è importante l'ordine
-			  for(int riga=6; riga>0;riga--) {
-				  for(int colonna=5; colonna>0; colonna--) {  //controllo su riga
-					  if(libreria[riga][colonna].getColor().equals(libreria[riga][colonna-1].getColor())) { //devono essere 8 oppure va bene se sono più di 8 tessere
-						  conta++;
-						  }
-					  }
-						  
-				  }
-			  if (conta>=8) {
-				  realizzato = true;
-			  }
-		    
-		    break;
-		}else {
-			break;
-		}
-		  case 7:
-		  if(libreria!=null) {
-			  conta=0;
-			  //5 tessere uguali che formano una diagonale 
-			  for(int riga=6; riga>0; riga--) {  //controllo diagonale da coordinate 6,5 a 2,1
-				  for(int colonna=5; colonna>0; colonna--) {
-				
-					  if(libreria[riga][colonna].getColor().equals(libreria[riga-1][colonna-1].getColor())) {
-						  conta++;
-					  }
-					 
-					  
-				  }
-			  }
-			  for(int riga=6; riga>0; riga--) { //controllo diagonale da coordinate 6,1  a 2,5
-				  for(int colonna=0; colonna<5; colonna++) {
-					 
-					  if(libreria[riga][colonna].getColor().equals(libreria[riga-1][colonna+1].getColor())) {
-						  conta++;
-					  }
-					 
-					  
-				  }
-			  }
-			  for(int riga=0; riga<6; riga++) { //controllo diagonale da coordinate 1,1 a 5,5
-				  for(int colonna=0; colonna<5; colonna++) {
-					 
-					  if(libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna+1].getColor())) {
-						  conta++;
-					  }
-					 
-					  
-				  }
-			  }
-			  for(int riga=4; riga<0; riga++) {//controllo diagonale da coordinate 5,1 a 1,5
-				  for(int colonna=0; colonna<5; colonna++) {
-					  if(libreria[riga][colonna].getColor().equals(libreria[riga-1][colonna+1].getColor())) {
-						  conta++;
-		     		  }
-					 
-				  }
-			  }
-			  
-			  if(conta>=1) {
-				  realizzato=true;
-			  }
-		    
-		    break;
-		  }else {
-			  break;
-		  }
-		    
-		  case 8:
-		  if(libreria!=null) {
-			  conta=0;
-			  boolean condizioneRiga=false; //verifica che la riga abbia le proprietà stabilite (massimo 3 tipi di tessere per riga)
-			  int contaTessRiga=0;  //conta le tessere verificate
-			  for(int riga =6; riga>0; riga--) {
-				  for(int colonna=0; colonna<5; colonna++) {
-					
-					  if(libreria[riga][colonna].getColor().equals(libreria[riga][colonna-1].getColor())) {
-						  contaTessRiga++;
-						  if(libreria[riga][colonna-1].getColor()!=libreria[riga][colonna-1].getColor()) {
-							  contaTessRiga++;
-						  }
-					  }
-					 
-					  if(contaTessRiga==3 && contaTessRiga==2) {
-						  condizioneRiga=true;
-					  }else {
-						  realizzato=false;
-					  }
-					  
-				  }
-			  }
-			  do {
-				  
-			  for(int riga=0; riga<6; riga++) {
-				  for(int colonna=0; colonna<5; colonna++) {
-					  
-						  if(libreria[riga][colonna]==libreria[riga-1][colonna]) {
-							  conta++;
-						  }
-						  
-					  
-				  }
-			  }
-			  
-			  }while(condizioneRiga && realizzato);
-			  
-			  if(conta>=4) {
-				  realizzato = true;
-			  }    
-			break;
-		  }else {
-			  break;
-		  }
-			
-		  case 9:
-		  if(libreria!=null) {
-			  conta=0;
-			  boolean verificaRiga=false;
-			  for(int riga=0; riga<6; riga++) {
-				  for(int colonna=0; colonna<5; colonna++) {
-				
-					  if(libreria[riga][colonna].getColor()!=libreria[riga][colonna+1].getColor()) {
-						  verificaRiga=true;
-					  }
-					 
-				  }
-			  }
-			  do {
-				  for(int riga=0; riga<6; riga++) {
-					  for(int colonna=0; colonna<5; colonna++) {
-						  if(libreria[riga][colonna].equals(libreria[riga+1][colonna])) {
-							  conta++;
-						  }
-					  }
-				  }
-			  }while(verificaRiga);
-			  
-			  if(conta>=2) {
-				  realizzato=true;
-			  }
-			    
-			break;
-		}else {
-			break;
-		}
-		  case 10:
-		  if(libreria!=null) {
-			  conta=0;
-			  boolean verificaColonna=false;
-			  for(int riga=0; riga<6; riga++) {
-				  for(int colonna=0; colonna<5; colonna++) {
-					  
-						  if(libreria[riga][colonna].getColor()!=libreria[riga+1][colonna].getColor()) {
-							  verificaColonna=true;
-							  }
-					  
-				  }
-			  }
-			  do {
-				  for(int riga=0; riga<6; riga++) {
-					  for(int colonna=0; colonna<5; colonna++) {
-						  
-						  if(libreria[riga][colonna].equals(libreria[riga][colonna+1])) {
-							  conta++;
-						  }
-						
-					  }
-				  }
-			  }while(verificaColonna && realizzato);
-			  
-			  if(conta>=2) {
-				  realizzato=true;
-			  }
-			  
-			    
-			break;
-		  }else {
-			  break;
-		  }
-		  case 11:
-		  if(libreria!=null) {
-			  //controllo tessere posizionate a x
-			  int contaRiga=0;
-			  
-			  for(int riga=0; riga<6; riga+=2) { //controllo prima combinazione
-				  for(int colonna=0; colonna<5; colonna++) {
-					
-					  if(libreria[riga][colonna].getColor()!=(libreria[riga][colonna+1].getColor())
-							  && libreria[riga][colonna].getColor().equals(libreria[riga][colonna+2].getColor())){
-						 contaRiga++;
-					  }
-					 
-				  }
-			  }
-			  for(int riga=1; riga<6; riga+=2) {
-				  for(int colonna=0; colonna<5; colonna++) {
-					 
-					  if(libreria[riga][colonna].getColor()!=(libreria[riga][colonna+1].getColor())
-							  && libreria[riga][colonna+1].getColor().equals(libreria[riga][colonna+2].getColor())){
-						  contaRiga++;
-						  
-					  }
-					 
-						  
-				  }
-				  
-			  }
-			  for(int riga=0; riga<6; riga+=2) { //controllo seconda combinazione
-				  for(int colonna=0; colonna<5; colonna++) {
-					 
-					  if(libreria[riga][colonna].getColor()!=libreria[riga][colonna+1].getColor()
-						  && libreria[riga][colonna].getColor().equals(libreria[riga][colonna+2].getColor())){
-						  contaRiga++;
-					  }
-					  
-				  }
-			  }
-			  for(int riga=1; riga<6; riga+=2) {
-				  for(int colonna=0; colonna<5; colonna++) {
-					  if(libreria[riga][colonna].getColor()!=libreria[riga][colonna+1].getColor()
-						  && libreria[riga][colonna+1].getColor().equals(libreria[riga][colonna+3].getColor())) {
-						  contaRiga++;
-					  }
-				  }
-			  }
-			  if(contaRiga>=1) {
-				  realizzato=true;
-			  }else {
-				  realizzato=false;
-				  break;
-			  } 
-			break;
-		  }else {
-			  break;
-		  }
-		  case 12:
-	      if(libreria!=null) {
-			 int continua=0;
-			 for(int riga=0; riga<6; riga++) {
-				 for(int colonna=0; colonna<5; colonna++) {
-					 if(libreria[riga][colonna].getColor()==null 
-							 && libreria[riga][colonna+1].getColor()==null) {
-						 continua++;
-					 }
-					 if(libreria[riga+1][colonna].getColor()!=null
-							 && libreria[riga][colonna+1].getColor()==null){
-						 continua++;
-							 
-						 }
-					 if(libreria[riga+2][colonna].getColor()!=null
-							 && libreria[riga][colonna+2].getColor()==null) {
-						 continua++;
-					 }
-					 if(libreria[riga+3][colonna].getColor()!=null
-							 && libreria[riga][colonna+3].getColor()==null) {
-						 continua++;
-					 }
-					 if(libreria[riga+4][colonna].getColor()!=null
-							 && libreria[riga][colonna+4].getColor()==null) {
-						 continua++;
-					 }
-					 if(libreria[riga+5][colonna].getColor()!=null) {
-						 continua++;
-					 }
-					 
-				 }
-			 }
-			 if(continua>=6) {
-				 realizzato=true;
-			 }else {
-				 realizzato=false;
-				 break;
-			 }
-	      
-			break;
-	      }else {
-	    	  break;
-	      }
-		}
+		  break;
 		
+		  case 7: //funziona
+		  if(libreria!=null) {
+			  if(libreria[0][0]!=null && libreria[1][1]!=null && libreria[2][2]!=null && libreria[3][3]!=null && libreria[4][4]!=null ) {
+				  if(libreria[0][0].getColor().equals(libreria[1][1].getColor()) && libreria[0][0].getColor().equals(libreria[2][2].getColor())
+						  && libreria[0][0].getColor().equals(libreria[3][3].getColor()) && libreria[0][0].getColor().equals(libreria[4][4].getColor())) {
+					  realizzato=true;
+				  }
+			  }
+			  if(libreria[1][0]!=null && libreria[2][1]!=null && libreria[3][2]!=null && libreria[4][3]!=null && libreria[5][4]!=null ) {
+				  if(libreria[0][1].getColor().equals(libreria[1][2].getColor()) && libreria[0][1].getColor().equals(libreria[2][3].getColor())
+						  && libreria[0][1].getColor().equals(libreria[3][4].getColor()) && libreria[0][1].getColor().equals(libreria[4][5].getColor())){
+					  realizzato=true;
+				  }
+			  }
+			  if(libreria[0][4]!=null && libreria[1][3]!=null && libreria[2][2]!=null && libreria[3][1]!=null && libreria[4][0]!=null) {
+				  if(libreria[0][4].getColor().equals(libreria[1][3].getColor()) && libreria[0][4].getColor().equals(libreria[2][2].getColor()) 
+						  && libreria[0][4].getColor().equals(libreria[3][1].getColor()) && libreria[0][4].getColor().equals(libreria[4][0].getColor())) {
+					  realizzato=true;
+				  }
+			  }
+			  if(libreria[1][4]!=null && libreria[2][3]!=null && libreria[3][2]!=null && libreria[4][1]!=null && libreria[5][0]!=null ) {
+				  if(libreria[1][4].getColor().equals(libreria[2][3].getColor()) && libreria[1][4].getColor().equals(libreria[3][2].getColor())
+						  && libreria[1][4].getColor().equals(libreria[4][1].getColor()) && libreria[1][4].getColor().equals(libreria[5][0].getColor())) {
+					  realizzato=true;
+				  }
+			  }
+		  }
+			  break;
+		  
+		    
+		  case 8: //funziona
+			  int b=0;
+			  if(libreria!=null) {
+				  conta=0;
+				  int [] piene= new int [6];
+				  Tile [] tipologia =new Tile [3];
+				  
+				  for(int riga=0; riga<6; riga++) {
+					  if(libreria[riga][0]!=null && libreria[riga][1]!=null && libreria[riga][2]!=null && libreria[riga][3]!=null &&
+							  libreria[riga][4]!=null) {
+						  piene[conta]=riga;
+						  conta+=1;
+					  	}
+					  }
+				  if(conta>3) {
+					  for(int y=0; y<5; y++) {
+						  for(int colonna=0; colonna<5; colonna++) {
+							  if(tipologia[0]==null ) {
+								  tipologia[0]=libreria[colonna][piene[y]];
+								  b++;
+							  }
+							  else {
+									  if(tipologia[1]==null && libreria[colonna][piene[y]]!=null) {
+										  if(tipologia[0].getColor()!=libreria[colonna][piene[y]].getColor()) {
+											  tipologia[1]=libreria[colonna][piene[y]];
+											  b++;
+										  }
+									  }else {
+										  if(tipologia[2]==null && libreria[colonna][piene[y]]!=null) {
+											  if(tipologia[0].getColor()!=libreria[colonna][piene[y]].getColor() && tipologia[1].getColor()!=libreria[colonna][piene[y]].getColor() ) {
+												  tipologia[2]=libreria[colonna][piene[y]];
+												  b++;
+											  }
+										  }
+										  else {
+											  if(libreria[colonna][piene[y]]!=null) {
+											  if(tipologia[0].getColor()!=libreria[colonna][piene[y]].getColor() && tipologia[1].getColor()!=libreria[colonna][piene[y]].getColor()
+													  && tipologia[2].getColor()!=libreria[colonna][piene[y]].getColor()) {
+												  b++;
+											  }
+											  }
+										  }
+									  }
+							}
+						 }
+					}
+				}
+				  else {
+					  b=4;
+				  }
+				if(b<4) {
+					realizzato=true;
+				}
+				else {
+					realizzato=false;
+				}
+			  	}
+			  break;
+			
+		  case 9: // funziona
+		  if(libreria!=null) {
+			  conta=0;
+			  
+			  for(int colonna=0; colonna<5; colonna++) {
+				  if(libreria[0][colonna]!=null && libreria[1][colonna]!=null && libreria[2][colonna]!=null && libreria[3][colonna]!=null &&
+						  libreria[4][colonna]!=null && libreria[5][colonna]!=null) {
+					  if(!(libreria[0][colonna].getColor().equals(libreria[1][colonna].getColor()) || libreria[0][colonna].getColor().equals(libreria[2][colonna].getColor()) 
+							  || libreria[0][colonna].getColor().equals(libreria[3][colonna].getColor()) || libreria[0][colonna].getColor().equals(libreria[4][colonna].getColor())
+							  || libreria[0][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
+						  if(!(libreria[1][colonna].getColor().equals(libreria[2][colonna].getColor()) || libreria[1][colonna].getColor().equals(libreria[3][colonna].getColor()) 
+								  || libreria[1][colonna].getColor().equals(libreria[4][colonna].getColor()) || libreria[1][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
+							  
+						  }
+						  if(!(libreria[2][colonna].getColor().equals(libreria[3][colonna].getColor()) || libreria[2][colonna].getColor().equals(libreria[4][colonna].getColor()) 
+								  || libreria[2][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
+							  if(!(libreria[3][colonna].getColor().equals(libreria[4][colonna].getColor()) || libreria[3][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
+								  if(!(libreria[4][colonna].getColor().equals(libreria[5][colonna].getColor()))){
+									  conta+=1;
+								  }
+							  }
+									 
+						  }
+					  }
+					  
+				  	}
+				  }
+			  if(conta>=2) {
+				  realizzato=true;
+			  }
+			  
+		  }
+		  break;
+	
+		  case 10: //funziona
+		  if(libreria!=null) {
+			  conta=0;
+			  
+			  for(int riga=0; riga<6; riga++) { //cambia a get color
+				  if((libreria[riga][0]!=null && libreria[riga][1]!=null && libreria[riga][2]!=null && libreria[riga][3]!=null &&
+						  libreria[riga][4]!=null)) {
+					  if(!(libreria[riga][0].getColor().equals(libreria[riga][1].getColor()) || libreria[riga][0].getColor().equals(libreria[riga][2].getColor()) 
+							  || libreria[riga][0].getColor().equals(libreria[riga][3].getColor()) || libreria[riga][0].getColor().equals(libreria[riga][4].getColor()))) {
+						  if(!(libreria[riga][1].getColor().equals(libreria[riga][2].getColor()) || libreria[riga][1].getColor().equals(libreria[riga][3].getColor()) 
+								  || libreria[riga][1].getColor().equals(libreria[riga][4].getColor()))) {
+							  if(!(libreria[riga][2].getColor().equals(libreria[riga][3].getColor()) || libreria[riga][2].getColor().equals(libreria[riga][4].getColor()))) {
+								  if(!(libreria[riga][3].getColor().equals(libreria[riga][4].getColor()))) {
+									  conta+=1;
+								  }
+							  }
+									   
+						  }
+					  }
+				  	}
+				  }
+			  if(conta>1) {
+				  realizzato=true;
+			  }
+		  }
+			  break;
+		  case 11: //funziona
+			  int c=0;
+		  if(libreria!=null) {
+			  for(int riga=0; riga<5; riga++) {
+				  for(int colonna=0; colonna<3; colonna++) {
+					  if((libreria[riga][colonna]!=null && libreria[riga][colonna+2]!=null && libreria[riga+1][colonna+1]!=null && libreria[riga+2][colonna]!=null &&
+							  libreria[riga+2][colonna+2]!=null)) {
+						  if((libreria[riga][colonna].getColor().equals(libreria[riga][colonna+2].getColor())&& libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna+1].getColor())
+								   && libreria[riga][colonna].getColor().equals(libreria[riga+2][colonna].getColor()) &&
+								   libreria[riga][colonna].getColor().equals(libreria[riga+2][colonna+2].getColor()))){
+							  c+=1;
+						  }
+					  }
+				  }
+			  }
+		  }
+		  if(c>0) {
+			  realizzato=true;
+		  }
+		  break;
+		  case 12: //funziona
+	      if(libreria!=null) {
+	    	  if(libreria[0][4]!=null && libreria[1][3]!=null && libreria[2][2]!=null && libreria[3][1]!=null && libreria[4][0]!=null) {
+	    		  if(libreria[1][4]==null && libreria[2][3]==null && libreria[3][2]==null && libreria[4][1]==null && libreria[5][0]==null){
+	    			  realizzato=true;
+	    		  }
+	    	  }
+	    	  if(libreria[1][4]!=null && libreria[2][3]!=null && libreria[3][2]!=null && libreria[4][1]!=null && libreria[5][0]!=null) {
+	    		  if(libreria[2][4]==null && libreria[3][3]==null && libreria[4][2]==null && libreria[5][1]==null){
+	    			  realizzato=true;
+	    		  }
+	    	  }
+	    	  if(libreria[0][0]!=null && libreria[1][1]!=null && libreria[2][2]!=null && libreria[3][3]!=null && libreria[4][4]!=null) {
+	    		  if(libreria[1][0]==null && libreria[2][1]==null && libreria[3][2]==null && libreria[4][3]==null&& libreria[5][4]==null){
+	    			  realizzato=true;
+	    		  }
+	    	  }
+	    	  if(libreria[1][0]!=null && libreria[2][1]!=null && libreria[3][2]!=null && libreria[4][3]!=null && libreria[5][4]!=null) {
+	    		  if(libreria[2][0]==null && libreria[3][1]==null && libreria[4][2]==null && libreria[4][3]==null){
+	    			  realizzato=true;
+	    		  }
+	    	  }
+	    	  
+	      }
+	      break;
+		}
 		if(realizzato==true && primacarta==true) {
 			realizzati[giocatore][0]=true;
 		}
