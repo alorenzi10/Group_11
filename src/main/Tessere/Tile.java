@@ -1,6 +1,6 @@
 package main.Tessere;
 
-public class Tile { //per ora non credo serva aggiungere altro
+public class Tile { 
 	
 	public final Color color;
 	

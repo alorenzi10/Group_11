@@ -11,7 +11,7 @@ public class Libreria{
 	private static int colonne=5;
 	private static int righe=6;
 	int id;
-	public static List<Tile[][]> librerie= new ArrayList<Tile[][]>();
+	public static List<Tile[][]> librerie= new ArrayList<Tile[][]>(); //lista delle librerie giocatori
 	
 	public static void aggiungiTiles(Tile [] selezionate, int b) {
 		
@@ -36,7 +36,7 @@ public class Libreria{
 			}
 		}
 		if(lunghezza>1) { 
-			do{//da sistemare
+			do{ //per scambio ordine delle tessere
 			for (int x=0; x<=lunghezza-2; x++) {
 				
 				for (int z=0; z<selezionate.length; z++) { //stampa tessere prese
@@ -46,7 +46,7 @@ public class Libreria{
 				}
 					int n = 0;
 					Tile temp;
-					do { //aggiunto dopo
+					do { 
 						
 						try {
 							System.out.println("Con che tessera vuoi scambiare la tessera numero "+(x+1)+ "? Premi 0 per ignorare" );
@@ -64,15 +64,14 @@ public class Libreria{
 						}
 					}while(!userInt);
 					
-						//meccanismo di scambio da sistemare (es non spostare l'ultima e farlo più passo a passo
-					if(n!=0 ) {  //mostra le tessere e chiedi in che ordine vorrebbe le tessere (migliore)
+					if(n!=0 ) {  //mostra le tessere e chiedi in che ordine vorrebbe le tessere 
 						temp=selezionate[x];
 						selezionate[x]=selezionate[n-1];
 						selezionate[n-1]=temp;
 					}
 			}
 			
-			for (int x=0; x<selezionate.length; x++) { //stampa tessere una volta invertite, aggiungi conferma?
+			for (int x=0; x<selezionate.length; x++) { //stampa tessere una volta invertite
 				if(selezionate[x]!=null) {
 					System.out.println((x+1)+" "+selezionate[x].getColor()+" ");
 				}
@@ -93,7 +92,7 @@ public class Libreria{
 		int counter=0;
 		
 		do {
-			do { //aggiunto dopo
+			do { 
 				
 				try {
 					System.out.println("Seleziona colonna in cui inserire 0-4");
@@ -105,7 +104,6 @@ public class Libreria{
 					userInt=false;
 				}
 			}while(!userInt);
-		 //aggiungi commento in caso di errore colonna
 		libere=0;
 		counter=0;
 		for(int i=0; i<selezionate.length;i++) {

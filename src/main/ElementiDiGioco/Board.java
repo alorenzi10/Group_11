@@ -12,8 +12,8 @@ public class Board{
 	private static int righe=11;
 	private static int colonne=11;
 	static Scanner input=new Scanner(System.in);
-	public static Tile[][] board=new Tile[righe][colonne];
-	public static boolean [][] prendibili= new boolean [righe][colonne];
+	public static Tile[][] board=new Tile[righe][colonne]; //tavola da gioco
+	public static boolean [][] prendibili= new boolean [righe][colonne]; //tavola da gioco booleana per capire quali tessere sono prendibili
 	
 	public static void Board(int ngiocatori){
 		Tiles.Inizializza(); //if primo giro
@@ -47,7 +47,7 @@ public class Board{
 			
 			for(int x=counter; x<132;x++) {
 				int r=x+rand.nextInt(132-x);
-				Tile temp=Tiles.tiles[r]; //errore su r al secondo giro why?
+				Tile temp=Tiles.tiles[r]; 
 				Tiles.tiles[r]=Tiles.tiles[x];
 				Tiles.tiles[x]=temp;
 			}
@@ -71,7 +71,7 @@ public class Board{
 		board[8][5]=Tiles.tiles[++counter];
 		board[8][6]=Tiles.tiles[++counter];
 		
-		if(ngiocatori>2) {
+		if(ngiocatori>2) { //tessere non sempre presenti a seconda dei giocatori
 			board[1][4]=Tiles.tiles[++counter];
 			board[3][3]=Tiles.tiles[++counter];
 			board[3][7]=Tiles.tiles[++counter];
@@ -95,7 +95,7 @@ public class Board{
 	
 	public static boolean TesserePrendibili() {
 		
-		for(int riga=0; riga<prendibili.length; riga++) {
+		for(int riga=0; riga<prendibili.length; riga++) { //resetta board booleana che controlla le tessere prendibili
 			for(int colonna=0; colonna<prendibili[0].length; colonna++) {
 				prendibili[riga][colonna]=false;
 			}
@@ -115,7 +115,7 @@ public class Board{
 			for(int y=0; y<11; y++) {
 				if(prendibili[x][y]==true) {
 						if(prendibili[x+1][y]==true || prendibili[x-1][y]==true || prendibili [x][y+1]==true || prendibili[x][y-1]==true) {
-							counter++;
+							counter++; //verifica che ci sia almeno una coppia di tessere prendibili
 						}
 					}
 				}
@@ -130,11 +130,10 @@ public class Board{
 	public static boolean ControlloScelta(int [][] selezionate, int counter) {
 		
 		boolean invalido=true;
-		if(counter==1) {
+		if(counter==1) { //sempre giusta se prendibile
 			invalido=true;
 		}
-		
-		if(counter==2) {
+		else if(counter==2) {
 			if((selezionate[0][1]==selezionate[1][1] && (selezionate[0][0]==(selezionate[1][0]+1) || selezionate[0][0]==(selezionate[1][0]-1)))
 				||(selezionate[0][0]==selezionate[1][0] && (selezionate[0][1]==(selezionate[1][1]+1) || selezionate[0][1]==(selezionate[1][1]-1)))){
 				invalido=true;
@@ -144,23 +143,30 @@ public class Board{
 				invalido=false;
 			}
 		}
-		
-		if(counter==3){
-			if(selezionate[0][1]==selezionate[1][1] && selezionate[0][1]==selezionate[2][1]) {
-				if((selezionate [1][0]==(selezionate[2][0]+1)||selezionate [1][0]==(selezionate[2][0]-1)) && (
-						selezionate [1][0]==(selezionate[0][0]+1)||selezionate [1][0]==(selezionate[0][0]-1))) {
+		else if(counter==3){
+			if(selezionate[0][1]==selezionate[1][1] && selezionate[1][1]==selezionate[2][1]) {
+				System.out.print("prova1");
+				if((selezionate [1][0]==((selezionate[2][0])+1)||selezionate [1][0]==((selezionate[2][0])-1)) && (
+						selezionate [1][0]==((selezionate[0][0])+1)||selezionate [1][0]==((selezionate[0][0]-1)))) {
+					System.out.print("prova5");
 					invalido=true;
 				}
-			}
-			if(selezionate[0][0]==selezionate[1][0] && selezionate[0][0]==selezionate[2][0]) {
-				if((selezionate [1][1]==(selezionate[2][1]+1)||selezionate [1][1]==(selezionate[2][1]-1)) && 
-						(selezionate [1][1]==(selezionate[0][1]+1)||selezionate [1][1]==(selezionate[0][1]-1))){
-					invalido=true;
+				else {
+					System.out.println("Le tre tessere non sono allineate");
+					invalido=false;
 				}
 			}
-			if(!(selezionate[0][0]==selezionate[1][0] && selezionate[0][0]==selezionate[2][0]) || (selezionate[0][1]==selezionate[1][1] && selezionate[0][1]==selezionate[2][1]) ){
-				System.out.println("Le tre tessere non sono allineate");
-				invalido=false;
+			else if(selezionate[0][0]==selezionate[1][0] && selezionate[1][0]==selezionate[2][0]) {
+				System.out.print("prova1");
+				if((selezionate [1][1]==((selezionate[2][1])+1)||selezionate [1][1]==((selezionate[2][1])-1)) && 
+						(selezionate [1][1]==((selezionate[0][1])+1)||selezionate [1][1]==((selezionate[0][1])-1))){
+					invalido=true;
+					System.out.print("prova2");
+				}
+				else {
+					System.out.println("Le tre tessere non sono allineate");
+					invalido=false;
+				}
 			}
 		}
 		return invalido;
@@ -182,12 +188,12 @@ public class Board{
 				boardfinita=Board.TesserePrendibili();
 			}
 			int spaziliberi=Libreria.calcolaSpazi(giocatore);
-			int spazimax=Libreria.calcolaSpaziColonnaMax(giocatore);
+			int spazimax=Libreria.calcolaSpaziColonnaMax(giocatore); //spazio massimo delle colonne
 			System.out.println("Spazi liberi della tua libreria = "+spaziliberi);
 			System.out.println("Spazi liberi max della tua libreria = "+spazimax);
 			Tile[] scelte=new Tile[3];
 			for(int i=0; i<3; i++) {
-				for(int z=0; z<2; z++) {
+				for(int z=0; z<2; z++) { //resetta vecchie scelte
 					cordinatescelte[i][z]=0;
 				}
 			}
@@ -197,17 +203,13 @@ public class Board{
 			int counter=0;
 			boolean giascelta=false;
 			boolean fine=true;
-		do {
-			 //per sapere a quante tessere siamo
-			
-			/////////
 			do {
-				/////////////
+			do {
 				do {
 					giascelta=false;
 					boolean userInt=true;
 					System.out.println("Scegli le cordinate delle tessere che vuoi prendere");
-					do { //aggiunto dopo
+					do { 
 						System.out.println("Scegli la riga e premere invio");  
 						try {
 							x=Integer.parseInt(input.nextLine());
@@ -218,7 +220,7 @@ public class Board{
 							userInt=false;
 						}
 					}while(!userInt);
-					do { //aggiunto dopo
+					do {
 						
 						try {
 							System.out.println("Scegli la colonna e premere invio");  
@@ -244,7 +246,7 @@ public class Board{
 					if(giascelta) {
 						System.out.println("Non puoi prendere la tessera gia scelta");  
 					}else {
-						cordinatescelte[counter][0]=x; //riempe matrice con le "3" coordinate
+						cordinatescelte[counter][0]=x; //riempe matrice con le 2 coordinate
 						cordinatescelte[counter][1]=y;
 					}
 					}while((x<0 || x>10) || (y<0 || y>10) || giascelta); //loop per scegliere cordinate esistenti e non uguali
@@ -253,7 +255,6 @@ public class Board{
 				if(prendibili[x][y]==true) {
 					Tile temp=board[x][y];
 					scelte[counter]=temp;	
-					//board[x][y]=null;	posso fare dopo grazie a matrice coordinate
 					esiste=false; 
 				}else {
 					esiste=true;
@@ -267,7 +268,7 @@ public class Board{
 			System.out.print("vuoi selezionare un altra tessera? 'no' per uscire, ogni altro carattere per continuare: " ); 
 			risposta=input.nextLine();
 			if(risposta.equals("no")) {
-				fine=false; //counter invece di i
+				fine=false; 
 			}
 			}
 			else {
@@ -283,7 +284,7 @@ public class Board{
 				}
 			
 			}
-			}while(fine); //loopa 3 volte (max prendibili)
+			}while(fine); //loopa 3 volte o max prendibili)
 		
 		invalido=ControlloScelta(cordinatescelte, counter);
 		if(!invalido) {
@@ -301,11 +302,9 @@ public class Board{
 		}while(!invalido); //fa riniziare da capo
 		return null;
 	}
-    //prova
+
 	
-	
-	public static void StampaBoard() { //devo rendere più simmetrica
-	
+	public static void StampaBoard() { 
 	String cornice = "__________"+"__________"+"__________"+
 			"__________"+"__________"+"__________"+"__________"+
 			"__________"+"__________";

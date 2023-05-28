@@ -1,16 +1,14 @@
 package main.Carte;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import main.Tessere.Tile;
 
 public class ObbComuni {
-							//da usare durante la partita per capire l'ordine dei punti 2-4-6-8
 	
-	static int [] estratto= new int[2];
-	static int i=0;
-	static boolean [][] realizzati=new boolean[4][2];
+	static int [] estratto= new int[2]; //per contenere carte estratte
+	static int i=0; //per contare a che carta estratta siamo
+	static boolean [][] realizzati=new boolean[4][2]; //per tenere controllati gli obbiettivi realizzati dai giocatori
 	
 	public static int AssegnaCarta() {
 		
@@ -27,43 +25,43 @@ public class ObbComuni {
 				}
 			}
 		}while(esiste);
-		Obbiettivo(valore);
+		Obbiettivo(valore); //per stampare la descrizione della carta
 		estratto[i]=valore;
 		i++;
 		return valore;
 	}
 	
-	public static boolean PuntiPersonali(Tile libreria[][], int ncarta, int giocatore){ //nome rivedibile //si riesce a passare libreria ed analizzarla?
+	public static boolean PuntiPersonali(Tile libreria[][], int ncarta, int giocatore){ 
 		
-		boolean realizzato=false;
-		boolean primacarta=true;
+		boolean realizzato=false; 
+		boolean primacarta=true; //controlla se sia la seconda o la prima carta
 		int conta=0;
-		if(realizzati[giocatore][0]==true && realizzati[giocatore][1]==true ) { //per evitare cicli inutili
+		if(realizzati[giocatore][0]==true && realizzati[giocatore][1]==true ) { //per evitare cicli inutili se ha già realizzato tutti e due
 			return realizzato;
 		}
 		if(estratto[0]!=ncarta) {
 			primacarta=false;
 		}
-		if(primacarta==false && realizzati[giocatore][1]==true) {
+		if(primacarta==false && realizzati[giocatore][1]==true) { //per evitare cicli inutili se ha già realizzato il secondo obb
 			return realizzato;
 		}
-		if(primacarta==true && realizzati[giocatore][0]==true) {
+		if(primacarta==true && realizzati[giocatore][0]==true) { //per evitare cicli inutili se ha già realizzato il primo obb
 			return realizzato;
 		}
 		
 		switch (ncarta) { 
 		  case 1:  ///funziona
 		  if(libreria!=null) {
-			  for(int riga=0; riga<6; riga++) { //controllo su riga
+			  for(int riga=0; riga<6; riga++) { //controllo su riga per coppie di tessere
 					for(int colonna=1; colonna<5; colonna++) {
 						if(libreria[riga][colonna]!=null && libreria[riga][colonna-1]!=null) {
-							if((libreria[riga][colonna].getColor()).equals(libreria[riga][colonna-1].getColor())){ //.toString da sistemare come metodo
+							if((libreria[riga][colonna].getColor()).equals(libreria[riga][colonna-1].getColor())){ 
 								conta++;
 							}
 						}
 					}
 				}
-			  for(int colonna=0; colonna<5; colonna++) { //controllo su colonna
+			  for(int colonna=0; colonna<5; colonna++) { //controllo su colonna per coppie di tessere
 					for(int riga=1; riga<6; riga++){
 						if(libreria[riga][colonna]!=null && libreria[riga-1][colonna]!=null) {
 							if((libreria[riga][colonna].getColor()).equals(libreria[riga-1][colonna].getColor())){
@@ -73,7 +71,7 @@ public class ObbComuni {
 					}
 				}
 		  }
-			  if(conta>5) {
+			  if(conta>5) { //almeno 6 coppie
 				  realizzato=true;
 			  }
 		
@@ -82,11 +80,11 @@ public class ObbComuni {
 		  case 2: ///funziona
 	      if(libreria!=null) {
 			  conta=0;
-			  for(int riga=0; riga<6; riga++) { //controllo su riga
+			  for(int riga=0; riga<6; riga++) { //controllo su riga per 4 tessere uguali
 					for(int colonna=2; colonna<4; colonna++) {
 						if(libreria[riga][colonna]!=null && libreria[riga][colonna+1]!=null && libreria[riga][colonna-2]!=null
 								&& libreria[riga][colonna-1]!=null) {
-						if((libreria[riga][colonna].getColor().equals(libreria[riga][colonna+1].getColor())) //.toString da sistemare come metodo
+						if((libreria[riga][colonna].getColor().equals(libreria[riga][colonna+1].getColor())) 
 								&&(libreria[riga][colonna-2].getColor().equals(libreria[riga][colonna-1].getColor()))){
 							if(libreria[riga][colonna].getColor().equals(libreria[riga][colonna-2].getColor())) {
 								conta++;
@@ -95,7 +93,7 @@ public class ObbComuni {
 						}
 					}
 				}
-			  for(int colonna=0; colonna<5; colonna++) { //controllo su colonna
+			  for(int colonna=0; colonna<5; colonna++) { //controllo su colonna per 4 tessere uguali
 					for(int riga=2; riga<5; riga++){
 						if(libreria[riga][colonna]!=null && libreria[riga+1][colonna]!=null && libreria[riga-2][colonna]!=null
 								&& libreria[riga-1][colonna]!=null) {
@@ -108,26 +106,24 @@ public class ObbComuni {
 						}
 					}
 				}
-			  if(conta>3) {  //forse è meglio rinizializzare la variabile conta altrimenti conta anche gli altri switch-case
+			  if(conta>3) {  //almeno 4 
 				  realizzato=true;
 			  }
 	      }
 		    break;
 	      
 		  case 3:///funziona
-		  if(libreria!=null) {
+		  if(libreria!=null) { //controla che i 4 angoli siano uguali
 			  if(libreria[0][0]!=null && libreria[5][0]!=null && libreria[0][4]!=null && libreria[5][4]!=null) {
 			  if((libreria[0][0].getColor()==libreria[5][0].getColor())&&(libreria[0][4].getColor()==libreria[5][4].getColor())) {
 				  realizzato=true;
 			  }
 			  }
-		    
-		    break;
-		  }else {
-			  break;
 		  }
+		    break;
+		  
 		  case 4:///funziona 
-		  if(libreria!=null) {
+		  if(libreria!=null) { //null safety
 			  conta=0;
 			  for(int riga=0; riga<5; riga++) {
 				  for(int colonna=0; colonna<4; colonna++) {
@@ -141,7 +137,7 @@ public class ObbComuni {
 				  }
 			  }
 			  
-			  if(conta>1) {
+			  if(conta>1) { //almeno 2 quadrati
 				  realizzato = true;
 			  }
 		  }
@@ -151,41 +147,41 @@ public class ObbComuni {
 			 int z=0;
 		  if(libreria!=null) {
 			  conta=0;
-			  int [] piene= new int [5];
-			  Tile [] tipologia =new Tile [3];
+			  int [] piene= new int [5]; //5 perché numero max di colonne
+			  Tile [] tipologia =new Tile [3]; //conterra fino a 3 tipi di tessere
 			  
-			  for(int colonna=0; colonna<5; colonna++) {
+			  for(int colonna=0; colonna<5; colonna++) { //controlla quante colonne sono piene
 				  if(libreria[0][colonna]!=null && libreria[1][colonna]!=null && libreria[2][colonna]!=null && libreria[3][colonna]!=null &&
 						  libreria[4][colonna]!=null && libreria[5][colonna]!=null) {
 					  piene[conta]=colonna;
 					  conta+=1;
 				  	}
 				  }
-			  if(conta>2) {
-				  for(int y=0; y<5; y++) {
+			  if(conta>2) { //controlla che ci siano almeno 3 colonne piene
+				  for(int y=0; y<5; y++) { //scorre solo le colonne piene
 					  for(int riga=0; riga<6; riga++) {
-						  if(tipologia[0]==null ) {
+						  if(tipologia[0]==null ) { //se array tipologie vuote viene riempito con la prima tipologia della tessera
 							  tipologia[0]=libreria[riga][piene[y]];
 							  z++;
 						  }
 						  else {
 								  if(tipologia[1]==null && libreria[riga][piene[y]]!=null) {
-									  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor()) {
+									  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor()) { //controlla che le tessere non siano dello stesso tipo della prima tipologia incontrata
 										  tipologia[1]=libreria[riga][piene[y]];
 										  z++;
 									  }
-								  }else {
-									  if(tipologia[2]==null && libreria[riga][piene[y]]!=null) {
-										  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor() && tipologia[1].getColor()!=libreria[riga][piene[y]].getColor() ) {
+								  }else { 
+									  if(tipologia[2]==null && libreria[riga][piene[y]]!=null) { //controlla che le tessere non siano dello stesso tipo della prima e della seconda tipologia incontrata
+										  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor() && tipologia[1].getColor()!=libreria[riga][piene[y]].getColor() ) { //nel caso riempie con la terza tiplogia
 											  tipologia[2]=libreria[riga][piene[y]];
 											  z++;
 										  }
 									  }
 									  else {
-										  if(libreria[riga][piene[y]]!=null) {
+										  if(libreria[riga][piene[y]]!=null) {  //controlla che le tessere non siano dello stesso tipo della prima,della seconda e della terza tipologia incontrata
 										  if(tipologia[0].getColor()!=libreria[riga][piene[y]].getColor() && tipologia[1].getColor()!=libreria[riga][piene[y]].getColor()
 												  && tipologia[2].getColor()!=libreria[riga][piene[y]].getColor()) {
-											  z++;
+											  z++; //conta quante tiplogie sono state incontrate
 										  }
 										  }
 									  }
@@ -195,7 +191,7 @@ public class ObbComuni {
 			}
 			}
 			  else {
-				  z=4;
+				  z=4; //se non ci sono almeno 3 colonne piene, non è realizzabile
 			  }
 			if(z<4) {
 				realizzato=true;
@@ -208,7 +204,7 @@ public class ObbComuni {
 		 
 		  case 6: //funziona
 		  if(libreria!=null) {
-			  int  pink = 0, blu= 0, lightblue= 0, yellow= 0, green= 0, white= 0;
+			  int  pink = 0, blu= 0, lightblue= 0, yellow= 0, green= 0, white= 0; //contatori di tipologie
 			  for(int riga=0; riga<6;riga++) {
 				  for(int colonna=0; colonna<5; colonna++){
 					  if(libreria[riga][colonna]!= null) {
@@ -241,7 +237,7 @@ public class ObbComuni {
 		  break;
 		
 		  case 7: //funziona
-		  if(libreria!=null) {
+		  if(libreria!=null) { //confronti con le 4 tipologie possibili di diagonali
 			  if(libreria[0][0]!=null && libreria[1][1]!=null && libreria[2][2]!=null && libreria[3][3]!=null && libreria[4][4]!=null ) {
 				  if(libreria[0][0].getColor().equals(libreria[1][1].getColor()) && libreria[0][0].getColor().equals(libreria[2][2].getColor())
 						  && libreria[0][0].getColor().equals(libreria[3][3].getColor()) && libreria[0][0].getColor().equals(libreria[4][4].getColor())) {
@@ -271,7 +267,7 @@ public class ObbComuni {
 		  
 		    
 		  case 8: //funziona
-			  int b=0;
+			  int b=0;  //ragionamento simile alla quinta carta
 			  if(libreria!=null) {
 				  conta=0;
 				  int [] piene= new int [6];
@@ -333,19 +329,22 @@ public class ObbComuni {
 		  if(libreria!=null) {
 			  conta=0;
 			  
-			  for(int colonna=0; colonna<5; colonna++) {
+			  for(int colonna=0; colonna<5; colonna++) { //controlla che per ogni colonna siano tutti diversi
 				  if(libreria[0][colonna]!=null && libreria[1][colonna]!=null && libreria[2][colonna]!=null && libreria[3][colonna]!=null &&
-						  libreria[4][colonna]!=null && libreria[5][colonna]!=null) {
+						  libreria[4][colonna]!=null && libreria[5][colonna]!=null) { //contorlla sulla prima che non abbia simili
 					  if(!(libreria[0][colonna].getColor().equals(libreria[1][colonna].getColor()) || libreria[0][colonna].getColor().equals(libreria[2][colonna].getColor()) 
 							  || libreria[0][colonna].getColor().equals(libreria[3][colonna].getColor()) || libreria[0][colonna].getColor().equals(libreria[4][colonna].getColor())
 							  || libreria[0][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
+						  //controllo sulla seconda
 						  if(!(libreria[1][colonna].getColor().equals(libreria[2][colonna].getColor()) || libreria[1][colonna].getColor().equals(libreria[3][colonna].getColor()) 
 								  || libreria[1][colonna].getColor().equals(libreria[4][colonna].getColor()) || libreria[1][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
 							  
-						  }
+						  //controllo sulla terza
 						  if(!(libreria[2][colonna].getColor().equals(libreria[3][colonna].getColor()) || libreria[2][colonna].getColor().equals(libreria[4][colonna].getColor()) 
 								  || libreria[2][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
+							  //controllo su quarta
 							  if(!(libreria[3][colonna].getColor().equals(libreria[4][colonna].getColor()) || libreria[3][colonna].getColor().equals(libreria[5][colonna].getColor()))) {
+								  //controllo su quinta
 								  if(!(libreria[4][colonna].getColor().equals(libreria[5][colonna].getColor()))){
 									  conta+=1;
 								  }
@@ -353,10 +352,10 @@ public class ObbComuni {
 									 
 						  }
 					  }
-					  
+					  }
 				  	}
 				  }
-			  if(conta>=2) {
+			  if(conta>1) {
 				  realizzato=true;
 			  }
 			  
@@ -364,7 +363,7 @@ public class ObbComuni {
 		  break;
 	
 		  case 10: //funziona
-		  if(libreria!=null) {
+		  if(libreria!=null) { //stesso ragionamento che per la 9
 			  conta=0;
 			  
 			  for(int riga=0; riga<6; riga++) { //cambia a get color
@@ -393,7 +392,7 @@ public class ObbComuni {
 			  int c=0;
 		  if(libreria!=null) {
 			  for(int riga=0; riga<5; riga++) {
-				  for(int colonna=0; colonna<3; colonna++) {
+				  for(int colonna=0; colonna<3; colonna++) { //controlla figura, con limite su colonna e riga perché andrebbe fuori dalla libreria
 					  if((libreria[riga][colonna]!=null && libreria[riga][colonna+2]!=null && libreria[riga+1][colonna+1]!=null && libreria[riga+2][colonna]!=null &&
 							  libreria[riga+2][colonna+2]!=null)) {
 						  if((libreria[riga][colonna].getColor().equals(libreria[riga][colonna+2].getColor())&& libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna+1].getColor())
@@ -410,7 +409,7 @@ public class ObbComuni {
 		  }
 		  break;
 		  case 12: //funziona
-	      if(libreria!=null) {
+	      if(libreria!=null) { //controlla le 4 combinazioni possibili 
 	    	  if(libreria[0][4]!=null && libreria[1][3]!=null && libreria[2][2]!=null && libreria[3][1]!=null && libreria[4][0]!=null) {
 	    		  if(libreria[1][4]==null && libreria[2][3]==null && libreria[3][2]==null && libreria[4][1]==null && libreria[5][0]==null){
 	    			  realizzato=true;
@@ -435,7 +434,7 @@ public class ObbComuni {
 	      }
 	      break;
 		}
-		if(realizzato==true && primacarta==true) {
+		if(realizzato==true && primacarta==true) { //aggiorna stato obbiettivi giocatore
 			realizzati[giocatore][0]=true;
 		}
 		if(realizzato==true && primacarta==false) {
@@ -457,10 +456,10 @@ public class ObbComuni {
 		    break;
 		  case 2: 
 			  System.out.println("Four groups each containing at least\r\n"
-			  		+ "			  4 tiles of the same type (not necessarily\r\n"
-			  		+ "			  in the depicted shape).\r\n"
-			  		+ "			  The tiles of one group can be different\r\n"
-			  		+ "			  from those of another group.");
+			  		+ "4 tiles of the same type (not necessarily\r\n"
+			  		+ "in the depicted shape).\r\n"
+			  		+ "The tiles of one group can be different\r\n"
+			  		+ "from those of another group.");
 		    break;
 		  case 3:
 			  System.out.println("Four tiles of the same type in the four\r\n"

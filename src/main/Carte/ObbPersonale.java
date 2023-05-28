@@ -8,9 +8,9 @@ import main.Tessere.Tile;
 
 public class ObbPersonale { 
 	
-	static int [] estratto= new int[4];
-	static List<Tile[][]> confronti= new ArrayList<Tile[][]>();
-	static int i=0;
+	static int [] estratto= new int[4]; //per segnare carte gia estratte
+	static List<Tile[][]> confronti= new ArrayList<Tile[][]>(); //per creare librerie con solo le tessere degli obbiettivi per confrontare con quelle del giocatore
+	static int i=0; //segna a che carta estratta siamo
 	
 	public static int AssegnaCarta() {
 		
@@ -38,19 +38,20 @@ public class ObbPersonale {
 		int contag=1;
 		int [][] raggruppamenti= new int [6][5];
 		
-		//controllo per righe 
+		//controllo per colonne, crea raggruppamenti verticali su libreria di int
+		//controlla verso alto
 				for(int i=0; i<5; i++) {
 					for(int y=0; y<5; y++) {
 						if(libreria1[i][y]!=null) {
 							if(libreria1[i+1][y]!=null) {
 								if(libreria1[i+1][y].getColor().equals(libreria1[i][y].getColor())) {
-									if(raggruppamenti[i][y]==0) {
+									if(raggruppamenti[i][y]==0) { //se in nessun gruppo lo crea
 									raggruppamenti[i][y]=contag;
 									raggruppamenti[i+1][y]=contag;
 									contag+=1;
 									}
 									else {
-										int temp=raggruppamenti[i][y];
+										int temp=raggruppamenti[i][y]; //passa gruppo gia esistente
 										raggruppamenti[i+1][y]=temp;
 									}
 								}
@@ -65,13 +66,13 @@ public class ObbPersonale {
 					System.out.println("");
 				}
 				System.out.println("");*/
-				
-				for(int y=0; y<4; y++) {
+				//controllo per righe guardando a destra
+				for(int y=0; y<4; y++) { //limitato a 4 per non andare fuori
 					for(int i=0; i<6; i++) {
 						if(libreria1[i][y]!=null) {
 							if(libreria1[i][y+1]!=null) {
 								if(libreria1[i][y+1].getColor().equals(libreria1[i][y].getColor())) {
-									if(raggruppamenti[i][y]==0) {
+									if(raggruppamenti[i][y]==0) { //come controllo su righe
 										if(raggruppamenti[i][y+1]==0) {
 										raggruppamenti[i][y]=contag;
 										raggruppamenti[i][y+1]=contag;
@@ -84,7 +85,7 @@ public class ObbPersonale {
 									}
 									else {
 										
-											int temp=raggruppamenti[i][y];
+											int temp=raggruppamenti[i][y]; //copia da destra (convenzione a scelta)
 											raggruppamenti[i][y+1]=temp;
 										
 									}
@@ -100,12 +101,13 @@ public class ObbPersonale {
 					System.out.println("");
 				}
 				System.out.println("");*/
+				//ricontrollo per colonne
 				for(int i=0; i<5; i++) {
 					for(int y=0; y<5; y++) {
 						if(libreria1[i][y]!=null) {
 							if(libreria1[i+1][y]!=null) {
 								if(libreria1[i+1][y].getColor().equals(libreria1[i][y].getColor())) {
-										int temp=raggruppamenti[i+1][y];
+										int temp=raggruppamenti[i+1][y]; //copia da riga superiore
 										raggruppamenti[i][y]=temp;
 								
 								}
@@ -122,9 +124,10 @@ public class ObbPersonale {
 				int [][] valori=new int [11][2];
 				int conta=0;
 				int conta2=0;
+				//scansiona libreria di int per controllare ragruppametni
 				for(int i=0; i<6; i++) {
 					for(int y=0; y<5; y++) {
-						for(int z=0; z<11; z++) {
+						for(int z=0; z<11; z++) { //scorre valore dei raggruppamenti per contare stessi valori
 							if(raggruppamenti[i][y]!=valori[z][0]) {
 								conta2+=1;
 								
@@ -173,11 +176,11 @@ public class ObbPersonale {
 		
 	
 	
-	public static int PuntiPersonali(Tile[][] libreria, int ncarta){ //confronto tra
+	public static int PuntiPersonali(Tile[][] libreria, int ncarta){ //confronto tra libreria e carta obbiettivo
 		
 		int punti=0;
 		int n=0;
-		if(ncarta==estratto[0]) { 
+		if(ncarta==estratto[0]) { //per capire a che giocatore siamo, si poteva anche passare dal main
 			n=0;
 		}
 		if(ncarta==estratto[1]) {
@@ -333,7 +336,7 @@ public class ObbPersonale {
 			break;
 			
 		}
-		if(turno==1) {
+		if(turno==1) { //in modo da poter visualizzare la propria carta più volte 
 			confronti.add(libreria);
 		}
 

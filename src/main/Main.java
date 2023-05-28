@@ -66,7 +66,7 @@ public class Main {
 		int [] punticarta2= new int[4];
 		punticarta1[3]=8;
 		punticarta2[3]=8;
-		if(n!=2) { //aggiungi token per ogni carta (ngiocatori) 4-8 4-6-8 2-4-6-8
+		if(n!=2) { //aggiungi token per ogni carta (ngiocatori) 4-8, 4-6-8, 2-4-6-8
 			punticarta1[2]=6;
 			punticarta1[2]=6;
 			punticarta1[1]=4;
@@ -75,15 +75,16 @@ public class Main {
 				punticarta1[0]=2;
 				punticarta1[0]=2;
 			}
-		}else {
+		}
+		if(n==2){
 			punticarta1[2]=4;
 			punticarta1[2]=4;
 		}
 		
-		Collections.shuffle(giocatori);
+		Collections.shuffle(giocatori); //mischia giocatori
 		for(int i=0; i<n; i++) {
 			Tile[][] creazione= new Tile[6][5];
-			Libreria.librerie.add(creazione);
+			Libreria.librerie.add(creazione); //crea librerie con stesso ordine giocatori
 		}
 		System.out.println("L'ordine di gioco sara': ");
 		for(Player prova2: giocatori) {
@@ -92,7 +93,7 @@ public class Main {
 		
 		int turno=0;	
 		String risposta=new String();
-		int contaCComuni1=3;
+		int contaCComuni1=3; 
 		int contaCComuni2=3;
 		Board.Board(n); //set up Board;
 		
@@ -128,13 +129,13 @@ public class Main {
 				Tile[] provatessere=Board.SceltaUtente(i);
 				Libreria.aggiungiTiles(provatessere, i);
 				if(ObbComuni.PuntiPersonali(Libreria.librerie.get(i), cartacomune1, i)) {
-					System.out.println("Hai realizzato per "+(5-contaCComuni1)+" il primo obbiettivo comune");
+					System.out.println("Hai realizzato per "+(4-contaCComuni1)+" il primo obbiettivo comune");
 					System.out.println("Hai realizzato +"+punticarta1[contaCComuni1]+" punti");
 					giocatori.get(i).punti=punticarta1[contaCComuni1];
 					contaCComuni1--;
 				}
 				if(ObbComuni.PuntiPersonali(Libreria.librerie.get(i), cartacomune2, i)) {
-					System.out.println("Hai realizzato per "+(5-contaCComuni1)+"il secondo obbiettivo comune");
+					System.out.println("Hai realizzato per "+(4-contaCComuni1)+" il secondo obbiettivo comune");
 					System.out.println("Hai realizzato +"+punticarta2[contaCComuni2]+" punti");
 					giocatori.get(i).punti=punticarta2[contaCComuni2];
 					contaCComuni2--;
@@ -154,6 +155,7 @@ public class Main {
 			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i), giocatori.get(i).numeroobb);
 			System.out.println();
 			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i));
+			System.out.println();
 		}
 		int [][] classifica= new int [n][2];
 		for(int i=0; i<n; i++){
