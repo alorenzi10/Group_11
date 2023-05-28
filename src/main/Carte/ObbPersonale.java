@@ -33,15 +33,161 @@ public class ObbPersonale {
 		return valore;
 	}
 	
-	public static int PuntiPersonali(Tile[][] libreria, int ncarta){ //nome rivedibile //si riesce a passare libreria ed analizzarla?
+	public static int PuntiPersonali(Tile[][] libreria1) {
+		int punti=0;
+		int contag=1;
+		int [][] raggruppamenti= new int [6][5];
+		
+		//controllo per righe 
+				for(int i=0; i<5; i++) {
+					for(int y=0; y<5; y++) {
+						if(libreria1[i][y]!=null) {
+							if(libreria1[i+1][y]!=null) {
+								if(libreria1[i+1][y].getColor().equals(libreria1[i][y].getColor())) {
+									if(raggruppamenti[i][y]==0) {
+									raggruppamenti[i][y]=contag;
+									raggruppamenti[i+1][y]=contag;
+									contag+=1;
+									}
+									else {
+										int temp=raggruppamenti[i][y];
+										raggruppamenti[i+1][y]=temp;
+									}
+								}
+							}
+						}
+					}	
+				}
+				/*for(int i=0; i<6; i++) {
+					for(int y=0; y<5; y++) {
+						System.out.print(raggruppamenti[i][y]+"|");
+					}
+					System.out.println("");
+				}
+				System.out.println("");*/
+				
+				for(int y=0; y<4; y++) {
+					for(int i=0; i<6; i++) {
+						if(libreria1[i][y]!=null) {
+							if(libreria1[i][y+1]!=null) {
+								if(libreria1[i][y+1].getColor().equals(libreria1[i][y].getColor())) {
+									if(raggruppamenti[i][y]==0) {
+										if(raggruppamenti[i][y+1]==0) {
+										raggruppamenti[i][y]=contag;
+										raggruppamenti[i][y+1]=contag;
+										contag+=1;
+										}
+										else {
+											int temp=raggruppamenti[i][y+1];
+											raggruppamenti[i][y]=temp;
+										}
+									}
+									else {
+										
+											int temp=raggruppamenti[i][y];
+											raggruppamenti[i][y+1]=temp;
+										
+									}
+								}
+							}
+						}
+					}	
+				}
+				/*for(int i=0; i<6; i++) {
+					for(int y=0; y<5; y++) {
+						System.out.print(raggruppamenti[i][y]+"|");
+					}
+					System.out.println("");
+				}
+				System.out.println("");*/
+				for(int i=0; i<5; i++) {
+					for(int y=0; y<5; y++) {
+						if(libreria1[i][y]!=null) {
+							if(libreria1[i+1][y]!=null) {
+								if(libreria1[i+1][y].getColor().equals(libreria1[i][y].getColor())) {
+										int temp=raggruppamenti[i+1][y];
+										raggruppamenti[i][y]=temp;
+								
+								}
+							}
+						}
+					}	
+				}
+				/*for(int i=0; i<6; i++) {
+					for(int y=0; y<5; y++) {
+						System.out.print(raggruppamenti[i][y]+"|");
+					}
+					System.out.println("");
+				}*/
+				int [][] valori=new int [11][2];
+				int conta=0;
+				int conta2=0;
+				for(int i=0; i<6; i++) {
+					for(int y=0; y<5; y++) {
+						for(int z=0; z<11; z++) {
+							if(raggruppamenti[i][y]!=valori[z][0]) {
+								conta2+=1;
+								
+							}
+							else {
+								valori[z][1]+=1;
+							}
+						}
+						if(conta2==valori.length) {
+							valori[conta][0]=raggruppamenti[i][y];
+							valori[conta][1]=1;
+							conta++;
+							}
+						conta2=0;
+					}
+				}
+				
+				for(int z=0; z<11; z++) {
+					if(valori[z][0]!=0) {
+					if(valori[z][1]==3) {
+						System.out.println("Hai raggruppato 3 tessere uguali, +2 punti");
+						punti+=2;
+					}
+					if(valori[z][1]==4) {
+						System.out.println("Hai raggruppato 4 tessere uguali, +3 punti");
+						punti+=3;
+					}
+					if(valori[z][1]==5) {
+						System.out.println("Hai raggruppato 5 tessere uguali, +5 punti");
+						punti+=5;
+					}
+					if(valori[z][1]>5) {
+						System.out.println("Hai raggruppato almeno6  tessere uguali, +8 punti");
+						punti+=8;
+					}
+					}
+				}
+				/*System.out.println("");
+				for(int z=0; z<11; z++) {
+					System.out.println(valori[z][0]+" "+valori[z][1]);
+				}
+				System.out.println(punti);*/
+				
+				return punti;
+			}
+		
+	
+	
+	public static int PuntiPersonali(Tile[][] libreria, int ncarta){ //confronto tra
 		
 		int punti=0;
-		int n;
-		if(ncarta==estratto[0]) {
+		int n=0;
+		if(ncarta==estratto[0]) { 
 			n=0;
 		}
-		else {
+		if(ncarta==estratto[1]) {
 			n=1;
+		}
+		if(ncarta==estratto[2]) {
+			n=2;
+		}
+		if(ncarta==estratto[3]) {
+			n=3;
 		}
 		Tile[][] confronto=confronti.get(n);
 		for(int riga=0; riga<6; riga++){
@@ -53,15 +199,28 @@ public class ObbPersonale {
 					}
 					}
 				}
-				
-				//trova modo per confrontare con le librerie gia prodotte
 			}
 		}
-		
-		return punti*2;
+		if(punti==3) {
+			System.out.println("Hai messeo le tessere in 3 posti richiesti, realizzando 4 punti");
+			punti=4;
+		}
+		if(punti==4) {
+			System.out.println("Hai messeo le tessere in 4 posti richiesti, realizzando 6 punti");
+			punti=6;
+		}
+		if(punti==5) {
+			System.out.println("Hai messeo le tessere in 5 posti richiesti, realizzando 9 punti");
+			punti=9;
+		}
+		if(punti==6) {
+			System.out.println("Hai messeo le tessere in 6 posti richiesti, realizzando 12 punti");
+			punti=12;
+		}
+		return punti;
 	}
 	
-	public static void Obbiettivo(int numerocarta) {
+	public static void Obbiettivo(int numerocarta, int turno) { //permette di visualizzare la propria cara obbiettivo
 		
 		Tile[][] libreria=new Tile[6][5];
 		Tile.Color[] colors=Tile.Color.values(); //Green, White, Yellow, Blue, Pink, LightBlue;
@@ -73,7 +232,7 @@ public class ObbPersonale {
 		Tile.Color light=colors[5];
 		
 		
-		switch (numerocarta) { //alternativa allo switch?
+		switch (numerocarta) { 
 		  case 1:
 			  
 			  libreria[5][0]=new Tile(pink);//pink
@@ -174,11 +333,13 @@ public class ObbPersonale {
 			break;
 			
 		}
-		confronti.add(libreria);
+		if(turno==1) {
+			confronti.add(libreria);
+		}
 
 		String spazio = "            ";
 		String separatore="|";
-			for(int riga=6-1; riga>=0; riga--) { //stampa invertita
+			for(int riga=6-1; riga>=0; riga--) { //stampa invertita della libreria
 				System.out.println("");
 				for(int colonna=0; colonna<5; colonna++) {
 					

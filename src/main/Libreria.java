@@ -18,8 +18,15 @@ public class Libreria{
 		Tile[][] libreria=librerie.get(b);
 		Scanner in=new Scanner(System.in);
 		boolean conferma=true;
-		int test;
+		int test = 0;
 		int lunghezza=0;
+		int selezionatelunghezza=0;
+		for(int i=0; i<selezionate.length; i++) {
+			if(selezionate[i]!=null) {
+				selezionatelunghezza+=1;
+			}
+		}
+		boolean userInt;
 		
 		stampaLibreria(b);
 		
@@ -37,11 +44,28 @@ public class Libreria{
 						System.out.println((z+1)+" "+selezionate[z].getColor()+" ");
 					}
 				}
-					int n;
+					int n = 0;
 					Tile temp;
-					System.out.println("Con che tessera vuoi scambiare la tessera numero "+(x+1)+ " 9 per ignorare" );
-					n=in.nextInt();	//meccanismo di scambio da sistemare (es non spostare l'ultima e farlo più passo a passo
-					if(n!=9) {  //mostra le tessere e chiedi in che ordine vorrebbe le tessere (migliore)
+					do { //aggiunto dopo
+						
+						try {
+							System.out.println("Con che tessera vuoi scambiare la tessera numero "+(x+1)+ "? Premi 0 per ignorare" );
+							n=Integer.parseInt(in.nextLine());
+							userInt=true;
+							if(n>selezionatelunghezza) {
+								userInt=false;
+								System.out.println("L'input deve essere tra le tessere proproste");
+							}
+							
+						}
+						catch(NumberFormatException e) {
+							System.out.println("L'input non e' valido, riprova");
+							userInt=false;
+						}
+					}while(!userInt);
+					
+						//meccanismo di scambio da sistemare (es non spostare l'ultima e farlo più passo a passo
+					if(n!=0 ) {  //mostra le tessere e chiedi in che ordine vorrebbe le tessere (migliore)
 						temp=selezionate[x];
 						selezionate[x]=selezionate[n-1];
 						selezionate[n-1]=temp;
@@ -55,18 +79,33 @@ public class Libreria{
 			}
 			String prova=new String();
 			conferma=true;
-			System.out.println("Confermi Ordine tessere? si per confermare");
-			prova=in.next();
+			System.out.println("Confermi Ordine tessere? 'si' per confermare, ogni altro carattere dire di no");
+			prova=in.nextLine();
 			if(prova.equals("si")) {
 				conferma=false;
 			}
 			}while(conferma);
 		}
+		else {
+			System.out.println("1 "+ selezionate[0].getColor());
+		}
 		int libere=0;
 		int counter=0;
+		
 		do {
-		System.out.println("Seleziona colonna in cui inserire 0-4"); //aggiungi commento in caso di errore colonna
-		test=in.nextInt(); 
+			do { //aggiunto dopo
+				
+				try {
+					System.out.println("Seleziona colonna in cui inserire 0-4");
+					test=Integer.parseInt(in.nextLine());
+					userInt=true;
+				}
+				catch(NumberFormatException e) {
+					System.out.println("L'input non e' valido, riprova");
+					userInt=false;
+				}
+			}while(!userInt);
+		 //aggiungi commento in caso di errore colonna
 		libere=0;
 		counter=0;
 		for(int i=0; i<selezionate.length;i++) {
@@ -122,8 +161,9 @@ public class Libreria{
 				
 			}
 		}
-		
 		System.out.println("");
+		System.out.println("|     0      |"+"|     1      |"+"|     2      |"+"|     3      |"+"|     4      |");
+		
 	}
 	
 	public static int calcolaSpazi(int giocatori) {
@@ -138,5 +178,24 @@ public class Libreria{
 			}
 		}
 		return libere;
+	}
+	
+	public static int calcolaSpaziColonnaMax(int giocatori) {
+		
+		int libere=1;
+		int max=0;
+		Tile[][] libreria=librerie.get(giocatori);
+		for(int x=0; x<righe; x++) {
+			for(int y=0; y<colonne; y++) {
+				if(libreria[x][y]==null) {
+					libere++;
+				}
+			}
+			if(libere>max) {
+				max=libere;
+			}
+			libere=1;
+		}
+		return max;
 	}
 }
