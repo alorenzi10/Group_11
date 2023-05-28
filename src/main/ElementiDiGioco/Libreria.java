@@ -13,7 +13,7 @@ public class Libreria{
 	int id;
 	public static List<Tile[][]> librerie= new ArrayList<Tile[][]>(); //lista delle librerie giocatori
 	
-	public static void aggiungiTiles(Tile [] selezionate, int b) {
+	public static void aggiungiTiles(Tile [] selezionate, int b) throws InterruptedException {
 		
 		Tile[][] libreria=librerie.get(b);
 		Scanner in=new Scanner(System.in);
@@ -36,6 +36,10 @@ public class Libreria{
 			}
 		}
 		if(lunghezza>1) { 
+			String risposta=new String ();
+			System.out.println("Vuoi cambiare l'ordine delle tessere? 'si' per cambiarle, invio per continuare");
+			risposta=in.nextLine();
+			if(risposta.equals("si")) {
 			do{ //per scambio ordine delle tessere
 			for (int x=0; x<=lunghezza-2; x++) {
 				
@@ -85,6 +89,14 @@ public class Libreria{
 			}
 			}while(conferma);
 		}
+			else {
+				for (int z=0; z<selezionate.length; z++) { //stampa tessere prese
+					if(selezionate[z]!=null) {
+						System.out.println((z+1)+" "+selezionate[z].getColor()+" ");
+					}
+				}
+			}
+		}
 		else {
 			System.out.println("1 "+ selezionate[0].getColor());
 		}
@@ -133,6 +145,7 @@ public class Libreria{
 		
 		librerie.set(b, libreria);
 		stampaLibreria(b);
+		Thread.sleep(1000);
 	}
 	
 	public static void stampaLibreria(int b) { 

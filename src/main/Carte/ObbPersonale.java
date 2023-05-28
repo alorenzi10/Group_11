@@ -160,10 +160,13 @@ public class ObbPersonale {
 						punti+=5;
 					}
 					if(valori[z][1]>5) {
-						System.out.println("Hai raggruppato almeno6  tessere uguali, +8 punti");
+						System.out.println("Hai raggruppato almeno 6  tessere uguali, +8 punti");
 						punti+=8;
 					}
 					}
+				}
+				if(punti==0) {
+					System.out.println("Hai raggruppato 0 tessere");
 				}
 				/*System.out.println("");
 				for(int z=0; z<11; z++) {
@@ -219,6 +222,9 @@ public class ObbPersonale {
 		else if(punti==6) {
 			System.out.println("Hai messo le tessere in 6 posti richiesti, realizzando 12 punti");
 			punti=12;
+		}
+		else {
+			System.out.println("Hai messo le tessere in 0 posti richiesti");
 		}
 		return punti;
 	}

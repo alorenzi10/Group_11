@@ -93,7 +93,7 @@ public class Board{
 		}
 	}
 	
-	public static boolean TesserePrendibili() {
+	public static boolean TesserePrendibili() throws InterruptedException {
 		
 		for(int riga=0; riga<prendibili.length; riga++) { //resetta board booleana che controlla le tessere prendibili
 			for(int colonna=0; colonna<prendibili[0].length; colonna++) {
@@ -122,12 +122,13 @@ public class Board{
 			}
 		if(counter<1) {
 			System.out.println("Le tessere prendibili sono tutte singole bisogna sistemare la board");
+			Thread.sleep(1000);
 			return true;
 			}
 		return false;
 		}
 	
-	public static boolean ControlloScelta(int [][] selezionate, int counter) {
+	public static boolean ControlloScelta(int [][] selezionate, int counter) throws InterruptedException {
 		
 		boolean invalido=true;
 		if(counter==1) { //sempre giusta se prendibile
@@ -140,39 +141,71 @@ public class Board{
 			}
 			else {
 				System.out.println("Le due tessere non sono allineate");
+				Thread.sleep(1000);
 				invalido=false;
 			}
 		}
 		else if(counter==3){
-			if(selezionate[0][1]==selezionate[1][1] && selezionate[1][1]==selezionate[2][1]) {
-				System.out.print("prova1");
-				if((selezionate [1][0]==((selezionate[2][0])+1)||selezionate [1][0]==((selezionate[2][0])-1)) && (
-						selezionate [1][0]==((selezionate[0][0])+1)||selezionate [1][0]==((selezionate[0][0]-1)))) {
-					System.out.print("prova5");
+			if(selezionate[0][0]==selezionate[1][0] && selezionate[1][0]==selezionate[2][0]){ //riga uguale
+				int [] uno=new int [3];
+				for(int i=0; i<3; i++) {
+					uno[i]=selezionate[i][1];
+				}
+				for(int i=0; i < 3; i++){  
+				       for(int j=1; j < (3-i); j++){  
+				           if(uno[j-1] > uno[j]){  
+				                //swap elements  
+				             int temp=uno[j-1];
+				             uno[j-1]=uno[j];
+				             uno[j]=temp;
+					
+				           }
+				       }
+				    }
+				if(uno[0]==(uno[1]-1) && uno[0]==(uno[2]-2)) {
 					invalido=true;
 				}
 				else {
 					System.out.println("Le tre tessere non sono allineate");
+					Thread.sleep(1000);
 					invalido=false;
 				}
 			}
-			else if(selezionate[0][0]==selezionate[1][0] && selezionate[1][0]==selezionate[2][0]) {
-				System.out.print("prova1");
-				if((selezionate [1][1]==((selezionate[2][1])+1)||selezionate [1][1]==((selezionate[2][1])-1)) && 
-						(selezionate [1][1]==((selezionate[0][1])+1)||selezionate [1][1]==((selezionate[0][1])-1))){
+			else if(selezionate[0][1]==selezionate[1][1] && selezionate[1][1]==selezionate[2][1]) { //colonna uguale
+				int [] uno=new int [3];
+				for(int i=0; i<3; i++) {
+					uno[i]=selezionate[i][0];
+				}
+				for(int i=0; i < 3; i++){  
+				       for(int j=1; j < (3-i); j++){  
+				           if(uno[j-1] > uno[j]){  
+				                //swap elements  
+				             int temp=uno[j-1];
+				             uno[j-1]=uno[j];
+				             uno[j]=temp;
+					
+				           }
+				       }
+				    }
+				if(uno[0]==(uno[1]-1) && uno[0]==(uno[2]-2)) {
 					invalido=true;
-					System.out.print("prova2");
 				}
 				else {
 					System.out.println("Le tre tessere non sono allineate");
+					Thread.sleep(1000);
 					invalido=false;
 				}
+			}
+			else {
+				System.out.println("Le tre tessere non sono allineate");
+				Thread.sleep(1000);
+				invalido=false;
 			}
 		}
 		return invalido;
 	}
 	
-	public static Tile[] SceltaUtente(int giocatore) {
+	public static Tile[] SceltaUtente(int giocatore) throws InterruptedException {
 		
 		boolean boardfinita=false;
 		boolean invalido=false;
@@ -185,6 +218,7 @@ public class Board{
 			if(boardfinita) {
 				Board.BoardSetUp(giocatore);
 				Board.StampaBoard();
+				Thread.sleep(1000);
 				boardfinita=Board.TesserePrendibili();
 			}
 			int spaziliberi=Libreria.calcolaSpazi(giocatore);
@@ -264,32 +298,30 @@ public class Board{
 			
 			counter++;
 
-			if(counter<3){
-			System.out.print("vuoi selezionare un altra tessera? 'no' per uscire, ogni altro carattere per continuare: " ); 
+			if(counter==spazimax) {
+				System.out.println("Stai per riempire la libreria non puoi piu prendere altre tessere");
+				fine=false;
+				 //counter invece di i
+				}
+			else if(counter<3){
+			System.out.print("vuoi selezionare un altra tessera? 'no' per uscire, premere invio per continuare: " ); 
 			risposta=input.nextLine();
-			if(risposta.equals("no")) {
+				if(risposta.equals("no")) {
 				fine=false; 
-			}
-			}
-			else {
-				
-				if(counter==spazimax) {
-					System.out.println("Stai per riempire la libreria non puoi piu prendere altre tessere");
-					fine=true;
-					 //counter invece di i
-					}
-				if(counter>2){
-					System.out.println("Non puoi prendere altre tessere");
-					fine=false;
 				}
 			
 			}
+			else if(counter>2){
+					System.out.println("Non puoi prendere altre tessere");
+					fine=false;
+				}
 			}while(fine); //loopa 3 volte o max prendibili)
 		
 		invalido=ControlloScelta(cordinatescelte, counter);
 		if(!invalido) {
 			System.out.println("Scegliere solo le tessere prendibili e adiacenti");
 			System.out.println("Effettua nuovamente la scelta");
+			Thread.sleep(1000);
 		}else {
 			for(int i=0; i<3; i++) {
 				int a=cordinatescelte[i][0];
@@ -307,17 +339,18 @@ public class Board{
 	public static void StampaBoard() { 
 	String cornice = "__________"+"__________"+"__________"+
 			"__________"+"__________"+"__________"+"__________"+
-			"__________"+"__________";
+			"__________"+"__________"+"__________";
 	
 	System.out.println(cornice);
-	System.out.println("   0     |"+"   2     |"+"   3     |"+"   4     |"+"   5     |"+"   6     |"+"   7     |"
-			+"   8     |"+"   9     |");
-		for(int riga=1; riga<righe-1; riga++) {
-			for(int colonna=1; colonna<colonne-1; colonna++) {
+		for(int riga=0; riga<righe-1; riga++) {
+			for(int colonna=0; colonna<colonne-1; colonna++) {
 				if(board[riga][colonna]==null) {
 					
-					if(colonna==1) {
+					if(colonna==0) {
 						System.out.print("   "+riga+"     |");
+					}
+					else if(riga==0) {
+						System.out.print("   "+colonna+"     |");
 					}
 					else {
 						System.out.print("         |");
