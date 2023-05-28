@@ -202,19 +202,19 @@ public class ObbPersonale {
 			}
 		}
 		if(punti==3) {
-			System.out.println("Hai messeo le tessere in 3 posti richiesti, realizzando 4 punti");
+			System.out.println("Hai messo le tessere in 3 posti richiesti, realizzando 4 punti");
 			punti=4;
 		}
-		if(punti==4) {
-			System.out.println("Hai messeo le tessere in 4 posti richiesti, realizzando 6 punti");
+		else if(punti==4) {
+			System.out.println("Hai messo le tessere in 4 posti richiesti, realizzando 6 punti");
 			punti=6;
 		}
-		if(punti==5) {
-			System.out.println("Hai messeo le tessere in 5 posti richiesti, realizzando 9 punti");
+		else if(punti==5) {
+			System.out.println("Hai messo le tessere in 5 posti richiesti, realizzando 9 punti");
 			punti=9;
 		}
-		if(punti==6) {
-			System.out.println("Hai messeo le tessere in 6 posti richiesti, realizzando 12 punti");
+		else if(punti==6) {
+			System.out.println("Hai messo le tessere in 6 posti richiesti, realizzando 12 punti");
 			punti=12;
 		}
 		return punti;

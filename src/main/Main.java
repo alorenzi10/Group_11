@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import main.Carte.ObbComuni;
 import main.Carte.ObbPersonale;
+import main.ElementiDiGioco.Board;
+import main.ElementiDiGioco.Libreria;
 import main.Giocatore.Player;
 import main.Tessere.Tile;
 
@@ -90,8 +92,8 @@ public class Main {
 		
 		int turno=0;	
 		String risposta=new String();
-		int contaCComuni1=4;
-		int contaCComuni2=4;
+		int contaCComuni1=3;
+		int contaCComuni2=3;
 		Board.Board(n); //set up Board;
 		
 		while(!primo) {
@@ -105,12 +107,17 @@ public class Main {
 					ObbPersonale.Obbiettivo(giocatori.get(i).numeroobb, turno);
 				}
 				else if(turno>1){
-				System.out.println("Vuoi rivedere gli obbiettivi comuni e personali? 'si' per rivederli");
+				System.out.println("Vuoi rivedere gli obbiettivi comuni ? 'si' per rivederli");
+				risposta=input.nextLine();
+				if(risposta.equals("si")) {
+					
+					ObbComuni.Obbiettivo(cartacomune1);
+					ObbComuni.Obbiettivo(cartacomune2);
+				}
+				System.out.println("Vuoi rivedere l'obbiettivo personale? 'si' per rivederli");
 				risposta=input.nextLine();
 				if(risposta.equals("si")) {
 					ObbPersonale.Obbiettivo(giocatori.get(i).numeroobb, turno);
-					ObbComuni.Obbiettivo(cartacomune1);
-					ObbComuni.Obbiettivo(cartacomune2);
 				}
 				System.out.println("Vuoi la tua libreria? 'si' per rivederla");
 				risposta=input.nextLine();
@@ -121,7 +128,7 @@ public class Main {
 				Tile[] provatessere=Board.SceltaUtente(i);
 				Libreria.aggiungiTiles(provatessere, i);
 				if(ObbComuni.PuntiPersonali(Libreria.librerie.get(i), cartacomune1, i)) {
-					System.out.println("Hai realizzato per "+(5-contaCComuni1)+"il primo obbiettivo comune");
+					System.out.println("Hai realizzato per "+(5-contaCComuni1)+" il primo obbiettivo comune");
 					System.out.println("Hai realizzato +"+punticarta1[contaCComuni1]+" punti");
 					giocatori.get(i).punti=punticarta1[contaCComuni1];
 					contaCComuni1--;
@@ -143,7 +150,9 @@ public class Main {
 		System.out.println("Fine gioco e ora si avvia conteggio");
 			
 		for(int i=0; i<n; i++){
+			System.out.println("Il giocatore "+giocatori.get(i).nome+" :");
 			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i), giocatori.get(i).numeroobb);
+			System.out.println();
 			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i));
 		}
 		int [][] classifica= new int [n][2];

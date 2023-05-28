@@ -1,4 +1,4 @@
-package main;
+package main.ElementiDiGioco;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class Libreria{
 	private static int colonne=5;
 	private static int righe=6;
 	int id;
-	static List<Tile[][]> librerie= new ArrayList<Tile[][]>();
+	public static List<Tile[][]> librerie= new ArrayList<Tile[][]>();
 	
 	public static void aggiungiTiles(Tile [] selezionate, int b) {
 		
@@ -182,19 +182,19 @@ public class Libreria{
 	
 	public static int calcolaSpaziColonnaMax(int giocatori) {
 		
-		int libere=1;
+		int libere=0;
 		int max=0;
 		Tile[][] libreria=librerie.get(giocatori);
-		for(int x=0; x<righe; x++) {
-			for(int y=0; y<colonne; y++) {
+		for(int y=0; y<colonne; y++) {
+			for(int x=0; x<righe; x++) {
 				if(libreria[x][y]==null) {
-					libere++;
+					libere++; 
 				}
 			}
 			if(libere>max) {
 				max=libere;
 			}
-			libere=1;
+			libere=0;
 		}
 		return max;
 	}

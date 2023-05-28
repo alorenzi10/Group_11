@@ -1,4 +1,4 @@
-package main;
+package main.ElementiDiGioco;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -105,7 +105,7 @@ public class Board{
 				if(board[x][y]!=null) {
 					if(board[x+1][y]==null || board[x-1][y]==null || board[x][y+1]==null || board[x][y-1]==null) {
 						prendibili[x][y]=true; //tavola di verità con le cordinate delle tessere prendibili
-						System.out.println("la tessera alla riga"+x+" e colonna "+y+" e' prendibile");
+						//System.out.println("la tessera alla riga"+x+" e colonna "+y+" e' prendibile");
 					}
 				}
 			}
@@ -231,10 +231,11 @@ public class Board{
 						}
 					}while(!userInt);
 					
-					if(counter>1) {
+					if(counter>0) {
 						if(cordinatescelte[0][0]==x && cordinatescelte[0][1]==y) { //per verificare non prenda stesse tessre
 							giascelta=true;
-						}else if(counter>2) {
+						}
+						if(counter>1) {
 							if(cordinatescelte[1][0]==x && cordinatescelte[1][1]==y) {
 								giascelta=true;
 							}
@@ -242,10 +243,10 @@ public class Board{
 					}
 					if(giascelta) {
 						System.out.println("Non puoi prendere la tessera gia scelta");  
+					}else {
+						cordinatescelte[counter][0]=x; //riempe matrice con le "3" coordinate
+						cordinatescelte[counter][1]=y;
 					}
-					cordinatescelte[counter][0]=x; //riempe matrice con le "3" coordinate
-					cordinatescelte[counter][1]=y;
-					
 					}while((x<0 || x>10) || (y<0 || y>10) || giascelta); //loop per scegliere cordinate esistenti e non uguali
 				////////////////
 				
@@ -273,7 +274,7 @@ public class Board{
 				
 				if(counter==spazimax) {
 					System.out.println("Stai per riempire la libreria non puoi piu prendere altre tessere");
-					fine=false;
+					fine=true;
 					 //counter invece di i
 					}
 				if(counter>2){
