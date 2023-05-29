@@ -93,8 +93,9 @@ public class Board{
 		}
 	}
 
-	public static boolean TesserePrendibili() throws InterruptedException {
-
+	public static int TesserePrendibili() throws InterruptedException {
+		
+		int rimanenti=0;
 		for(int riga=0; riga<prendibili.length; riga++) { //resetta board booleana che controlla le tessere prendibili
 			for(int colonna=0; colonna<prendibili[0].length; colonna++) {
 				prendibili[riga][colonna]=false;
@@ -106,6 +107,7 @@ public class Board{
 					if(board[x+1][y]==null || board[x-1][y]==null || board[x][y+1]==null || board[x][y-1]==null) {
 						prendibili[x][y]=true; //tavola di verità con le cordinate delle tessere prendibili
 						//System.out.println("la tessera alla riga"+x+" e colonna "+y+" e' prendibile");
+						rimanenti+=1;
 					}
 				}
 			}
@@ -123,9 +125,9 @@ public class Board{
 		if(counter<1) {
 			System.out.println("Le tessere prendibili sono tutte singole bisogna sistemare la board");
 			Thread.sleep(1000);
-			return true;
+			return counter=0; 
 		}
-		return false;
+		return rimanenti; //per evitare che il giocatore quando prende tutte le tessere non provi a selezionarne un altra restando incastrato nell loop di scelta
 	}
 	
 	public static boolean ControlloScelta(int [][] selezionate, int counter) throws InterruptedException {
@@ -205,9 +207,9 @@ public class Board{
 		return invalido;
 	}
 
-	public static Tile[] SceltaUtente(int giocatore) throws InterruptedException {
+	public static Tile[] SceltaUtente(int giocatore, int ngiocatori) throws InterruptedException {
 
-		boolean boardfinita=false;
+		int boardfinita=10;
 		boolean invalido=false;
 		int[][] cordinatescelte= new int[3][2];
 
@@ -215,16 +217,16 @@ public class Board{
 
 			Board.StampaBoard();
 			boardfinita=Board.TesserePrendibili();
-			if(boardfinita) {
-				Board.BoardSetUp(giocatore);
+			if(boardfinita==0) {
+				Board.BoardSetUp(ngiocatori);
 				Board.StampaBoard();
 				Thread.sleep(1000);
 				boardfinita=Board.TesserePrendibili();
 			}
 			int spaziliberi=Libreria.calcolaSpazi(giocatore);
 			int spazimax=Libreria.calcolaSpaziColonnaMax(giocatore); //spazio massimo delle colonne
-			System.out.println("Spazi liberi della tua libreria = "+spaziliberi);
-			System.out.println("Spazi liberi max della tua libreria = "+spazimax);
+			System.out.print("Spazi liberi della tua libreria = "+spaziliberi);
+			System.out.println(". Spazi liberi max della tua libreria = "+spazimax);
 			Tile[] scelte=new Tile[3];
 			for(int i=0; i<3; i++) {
 				for(int z=0; z<2; z++) { //resetta vecchie scelte
@@ -237,6 +239,7 @@ public class Board{
 			int counter=0;
 			boolean giascelta=false;
 			boolean fine=true;
+			Libreria.stampaLibreria(giocatore);
 			do {
 				do {
 					do {
@@ -254,6 +257,11 @@ public class Board{
 
 								x=Integer.parseInt(input.nextLine());
 								userInt=true;
+								if(x<1 ||x >9) {
+									System.out.println("L'input non appertine alle righe, riprova");
+									userInt=false;
+								}
+								
 							}
 							catch(NumberFormatException e) {
 								System.out.println("L'input non e' valido, riprova");
@@ -266,6 +274,10 @@ public class Board{
 								System.out.println("Scegli il numero della colonna e premi invio");  
 								y=Integer.parseInt(input.nextLine());
 								userInt=true;
+								if(y<1 ||y >9) {
+									System.out.println("L'input non appertine alle colonne, riprova");
+									userInt=false;
+								}
 							}
 							catch(NumberFormatException e) {
 								System.out.println("L'input non e' valido, riprova");
@@ -310,23 +322,32 @@ public class Board{
 					//counter invece di i
 				}
 				else if(counter<3){
+					if(counter==boardfinita) {
+						System.out.println("Non puoi prendere altre tessere perche sono finite");
+						fine=false;
+					}
+					else {
+						
 					System.out.print("vuoi selezionare un altra tessera? 'no' per uscire, premere invio per continuare: " ); 
 					risposta=input.nextLine();
 					if(risposta.equals("no")) {
 						fine=false; 
 					}
+					}
+					
 
 				}
 				else if(counter>2){
 					System.out.println("Non puoi prendere altre tessere");
 					fine=false;
 				}
+				
 			}while(fine); //loopa 3 volte o max prendibili)
 
 			invalido=ControlloScelta(cordinatescelte, counter);
 			if(!invalido) {
 				System.out.println("Scegliere solo le tessere prendibili e adiacenti");
-				System.out.println("Effettua nuovamente la scelta");
+				System.out.println("Effettua nuovamente le scelte");
 				Thread.sleep(1000);
 			}else {
 				for(int i=0; i<3; i++) {

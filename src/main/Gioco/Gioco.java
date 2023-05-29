@@ -129,32 +129,24 @@ public class Gioco {
 					Thread.sleep(2000);
 				}
 				else if(turno>1){
-					System.out.println("Ti ricordi la libreria e gli obbiettivi? 'si' per rivederli, invio per continuare");
+
+					System.out.println("Vuoi rivedere gli obbiettivi comuni ? 'si' per rivederli, invio per continuare");
 					risposta=input.nextLine();
 					if(risposta.equals("si")) {
-						System.out.println("Vuoi rivedere gli obbiettivi comuni ? 'si' per rivederli");
-						risposta=input.nextLine();
-						if(risposta.equals("si")) {
 
-							ObbComuni.Obbiettivo(cartacomune1);
-							ObbComuni.Obbiettivo(cartacomune2);
-							Thread.sleep(2000);
-						}
-						System.out.println("Vuoi rivedere l'obbiettivo personale? 'si' per rivederli");
-						risposta=input.nextLine();
-						if(risposta.equals("si")) {
-							ObbPersonale.Obbiettivo(giocatori.get(i).numeroobb, turno);
-							Thread.sleep(2000);
-						}
-						System.out.println("Vuoi la tua libreria? 'si' per rivederla");
-						risposta=input.nextLine();
-						if(risposta.equals("si")) {
-							Libreria.stampaLibreria(i);
-							Thread.sleep(2000);
-						}
+						ObbComuni.Obbiettivo(cartacomune1);
+						ObbComuni.Obbiettivo(cartacomune2);
+						Thread.sleep(2000);
 					}
+					System.out.println("Vuoi rivedere l'obbiettivo personale? 'si' per rivederli, invio per continuare");
+					risposta=input.nextLine();
+					if(risposta.equals("si")) {
+						ObbPersonale.Obbiettivo(giocatori.get(i).numeroobb, turno);
+						Thread.sleep(2000);
+					}
+
 				}
-				Tile[] provatessere=Board.SceltaUtente(i);
+				Tile[] provatessere=Board.SceltaUtente(i, n);
 				Thread.sleep(1000);
 				Libreria.aggiungiTiles(provatessere, i);
 				if(ObbComuni.PuntiPersonali(Libreria.librerie.get(i), cartacomune1, i)) {
@@ -194,7 +186,7 @@ public class Gioco {
 				System.out.println("Hai realizzato il primo obbiettivo comune per "+giocatori.get(i).cartacomune1);
 			}
 			if(giocatori.get(i).cartacomune2>0) {
-				System.out.println("Hai realizzato il primo obbiettivo comune per "+giocatori.get(i).cartacomune2);
+				System.out.println("Hai realizzato il secondo obbiettivo comune per "+giocatori.get(i).cartacomune2);
 			}
 			if(giocatori.get(i).fine==true) {
 				System.out.println("Hai finito per primo la libreria");

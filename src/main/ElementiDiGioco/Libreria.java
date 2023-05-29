@@ -108,6 +108,10 @@ public class Libreria{
 					System.out.println("Seleziona la colonna in cui inserire le tessere. Da 0 a 4.");
 					test=Integer.parseInt(in.nextLine());
 					userInt=true;
+					if(test<0 || test>4) {
+						userInt=false;
+						System.out.println("L'input non e' valido, riprova");
+					}
 				}
 				catch(NumberFormatException e) {
 					System.out.println("L'input non e' valido, riprova");
@@ -144,6 +148,7 @@ public class Libreria{
 		librerie.set(b, libreria);
 		stampaLibreria(b);
 		Thread.sleep(1000);
+		System.out.println("");
 	}
 	
 	public static void stampaLibreria(int b) { 

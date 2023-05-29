@@ -130,7 +130,8 @@ public class ObbComuni {
 						if(libreria[riga][colonna]!=null && libreria[riga+1][colonna+1]!=null &&
 								libreria[riga][colonna+1]!=null && libreria[riga+1][colonna]!=null) {
 							if(libreria[riga][colonna].getColor().equals(libreria[riga+1][colonna+1].getColor())
-									&&libreria[riga][colonna+1].getColor().equals(libreria[riga+1][colonna].getColor())) {
+									&& libreria[riga][colonna+1].getColor().equals(libreria[riga+1][colonna].getColor())
+									&& libreria[riga][colonna].getColor().equals(libreria[riga][colonna+1].getColor()) ) {
 								conta++;
 							}
 						}
@@ -472,7 +473,7 @@ public class ObbComuni {
 					+ "those of the other square.");
 			break;
 		case 5:
-			System.out.println("Three columns each formed by 6 tiles Five tiles of the same type forming an X.\r\n"
+			System.out.println("Three columns each formed by 6 tiles\r\n"
 					+ "of maximum three different types. One\r\n"
 					+ "column can show the same or a different\r\n"
 					+ "combination of another column.");
