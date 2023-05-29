@@ -17,9 +17,6 @@ public class Tiles {
 				bagtiles++;
 			}
 		}
-		/*for(int i=0; i<132; i++) {
-			System.out.println(tiles[i]+" "+i);
-		}*/
 	}
 	
 	public static void Mischia(){ //mischia le tessere create
@@ -32,9 +29,6 @@ public class Tiles {
 			tiles[r]=tiles[i];
 			tiles[i]=temp;
 		}
-		/*for(int i=0; i<132; i++) {
-			System.out.println(tiles[i]+" "+i);
-		}*/
 	}
 	
 }

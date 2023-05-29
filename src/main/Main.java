@@ -14,9 +14,9 @@ import main.Tessere.Tile;
 
 public class Main {
 	public static void main(String[] args) throws InterruptedException{
-		
+
 		Scanner input=new Scanner(System.in);
-		
+
 		//Lettura numero di giocatori
 		boolean userInt=false;
 		int n=0;
@@ -31,7 +31,7 @@ public class Main {
 				userInt=false;
 			}
 		}while(n<2 || n>4 || !userInt);
-		
+
 		//Vengono creati i profili dei giocatori
 		List<Player> giocatori= new ArrayList<Player>();
 		for(int i=0; i<n; i++) {
@@ -39,30 +39,30 @@ public class Main {
 			int cartaobb;
 			do {
 				userInt=true;
-			System.out.println("Inserisci nome del giocatore "+(1+i)+": ");
-			nome=input.nextLine();
-			if (nome.isBlank()  || nome.isEmpty()) {
-				System.out.println("Si prega di non inserire nomi vuoti");
-				userInt=false;
-			}
-			else {
-			for(int y=0; y<giocatori.size(); y++) {
-				if(giocatori.get(y).nome!=null) {
-					if(giocatori.get(y).nome.equals(nome)) {
-						userInt=false;
+				System.out.println("Inserisci nome del giocatore "+(1+i)+": ");
+				nome=input.nextLine();
+				if (nome.isBlank()  || nome.isEmpty()) {
+					System.out.println("Si prega di non inserire nomi vuoti");
+					userInt=false;
 				}
-			}
-			}
-			if(!userInt) {
-				System.out.println("Si prega di non inserire nomi uguali");
+				else {
+					for(int y=0; y<giocatori.size(); y++) {
+						if(giocatori.get(y).nome!=null) {
+							if(giocatori.get(y).nome.equals(nome)) {
+								userInt=false;
+							}
+						}
+					}
+					if(!userInt) {
+						System.out.println("Si prega di non inserire nomi uguali");
+					}
 				}
-			}
 			}while(!userInt);
 			cartaobb=ObbPersonale.AssegnaCarta();
 			Player inserimento=new Player(nome, cartaobb);
 			giocatori.add(inserimento);
 		}
-		
+
 		int cartacomune1, cartacomune2; 
 		boolean primo=false;
 		System.out.println("");
@@ -94,7 +94,7 @@ public class Main {
 			punticarta1[2]=4;
 			punticarta2[2]=4;
 		}
-		
+
 		Collections.shuffle(giocatori); //mischia giocatori
 		for(int i=0; i<n; i++) {
 			Tile[][] creazione= new Tile[6][5];
@@ -113,13 +113,13 @@ public class Main {
 		int contaCComuni1=3; 
 		int contaCComuni2=3;
 		Board.Board(n); //set up Board;
-		
+
 		while(!primo) {
 			turno++;
 			System.out.println("E' iniziato il "+turno+" turno !");
 			Thread.sleep(1000);
 			for(int i=0; i<n; i++){
-				
+
 				System.out.println("Tocca al giocatore di nome "+giocatori.get(i).nome);
 				Thread.sleep(1000);
 				if(turno==1) {
@@ -128,30 +128,30 @@ public class Main {
 					Thread.sleep(2000);
 				}
 				else if(turno>1){
-				System.out.println("Ti ricordi la libreria e gli obbiettivi? 'si' per rivederli, invio per continuare");
-				risposta=input.nextLine();
-				if(risposta.equals("si")) {
-				System.out.println("Vuoi rivedere gli obbiettivi comuni ? 'si' per rivederli");
-				risposta=input.nextLine();
-				if(risposta.equals("si")) {
-					
-					ObbComuni.Obbiettivo(cartacomune1);
-					ObbComuni.Obbiettivo(cartacomune2);
-					Thread.sleep(2000);
-				}
-				System.out.println("Vuoi rivedere l'obbiettivo personale? 'si' per rivederli");
-				risposta=input.nextLine();
-				if(risposta.equals("si")) {
-					ObbPersonale.Obbiettivo(giocatori.get(i).numeroobb, turno);
-					Thread.sleep(2000);
-				}
-				System.out.println("Vuoi la tua libreria? 'si' per rivederla");
-				risposta=input.nextLine();
-				if(risposta.equals("si")) {
-					Libreria.stampaLibreria(i);
-					Thread.sleep(2000);
+					System.out.println("Ti ricordi la libreria e gli obbiettivi? 'si' per rivederli, invio per continuare");
+					risposta=input.nextLine();
+					if(risposta.equals("si")) {
+						System.out.println("Vuoi rivedere gli obbiettivi comuni ? 'si' per rivederli");
+						risposta=input.nextLine();
+						if(risposta.equals("si")) {
+
+							ObbComuni.Obbiettivo(cartacomune1);
+							ObbComuni.Obbiettivo(cartacomune2);
+							Thread.sleep(2000);
+						}
+						System.out.println("Vuoi rivedere l'obbiettivo personale? 'si' per rivederli");
+						risposta=input.nextLine();
+						if(risposta.equals("si")) {
+							ObbPersonale.Obbiettivo(giocatori.get(i).numeroobb, turno);
+							Thread.sleep(2000);
+						}
+						System.out.println("Vuoi la tua libreria? 'si' per rivederla");
+						risposta=input.nextLine();
+						if(risposta.equals("si")) {
+							Libreria.stampaLibreria(i);
+							Thread.sleep(2000);
+						}
 					}
-				}
 				}
 				Tile[] provatessere=Board.SceltaUtente(i);
 				Thread.sleep(1000);
@@ -160,6 +160,7 @@ public class Main {
 					System.out.println("Hai realizzato per "+(4-contaCComuni1)+" il primo obbiettivo comune");
 					System.out.println("Hai realizzato +"+punticarta1[contaCComuni1]+" punti");
 					giocatori.get(i).punti=punticarta1[contaCComuni1];
+					giocatori.get(i).cartacomune1=(4-contaCComuni1);
 					contaCComuni1--;
 					Thread.sleep(1000);
 				}
@@ -167,6 +168,7 @@ public class Main {
 					System.out.println("Hai realizzato per "+(4-contaCComuni2)+" il secondo obbiettivo comune");
 					System.out.println("Hai realizzato +"+punticarta2[contaCComuni2]+" punti");
 					giocatori.get(i).punti=punticarta2[contaCComuni2];
+					giocatori.get(i).cartacomune2=(4-contaCComuni2);
 					contaCComuni2--;
 					Thread.sleep(1000);
 				}
@@ -175,16 +177,27 @@ public class Main {
 					System.out.println("Hai riempito per primo tutta la libreria, realizzando 1 punto");
 					primo=true;
 					giocatori.get(i).punti+=1;
+					giocatori.get(i).fine=true;
 					Thread.sleep(1000);
 				}	
-		}
+			}
 		}
 		System.out.println("Fine gioco e ora si avvia conteggio");
 		Thread.sleep(1000);
-			
+
 		for(int i=0; i<n; i++){
 			System.out.println("Il giocatore "+giocatori.get(i).nome+" :");
 			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i), giocatori.get(i).numeroobb);
+			System.out.println();
+			if(giocatori.get(i).cartacomune1>0) {
+				System.out.println("Hai realizzato il primo obbiettivo comune per "+giocatori.get(i).cartacomune1);
+			}
+			if(giocatori.get(i).cartacomune2>0) {
+				System.out.println("Hai realizzato il primo obbiettivo comune per "+giocatori.get(i).cartacomune2);
+			}
+			if(giocatori.get(i).fine==true) {
+				System.out.println("Hai finito per primo la libreria");
+			}
 			System.out.println();
 			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i));
 			System.out.println();
@@ -194,26 +207,26 @@ public class Main {
 			classifica[i][0]=i;
 			classifica[i][1]=giocatori.get(i).punti;
 		}
-	    int temp = 0;  
-	    int temp1=0;
-	    for(int i=0; i < n; i++){  
-	       for(int j=1; j < (n-i); j++){  
-	           if(classifica[j-1][1] > classifica[j][1]){  
-	                //swap elements  
-	             temp = classifica[j-1][1];  
-	             temp1=classifica[j-1][0];
-	             classifica[j-1][1] = classifica[j][1];  
-	             classifica[j-1][0]=classifica[j][0]; 
-	             classifica[j][1] = temp;  
-	             classifica[j][0]=temp1;
-		
-	           }
-	       }
-	    }
-	    System.out.println("Classifica");
-	    for(int i=n-1; i >=0; i--) {
-	    	System.out.println(i+" :"+giocatori.get(classifica[i][0]).nome+" con "+ classifica[i][1]+" punti");
-	    }
+		int temp = 0;  
+		int temp1=0;
+		for(int i=0; i < n; i++){  
+			for(int j=1; j < (n-i); j++){  
+				if(classifica[j-1][1] > classifica[j][1]){  
+
+					temp = classifica[j-1][1];  
+					temp1=classifica[j-1][0];
+					classifica[j-1][1] = classifica[j][1];  
+					classifica[j-1][0]=classifica[j][0]; 
+					classifica[j][1] = temp;  
+					classifica[j][0]=temp1;
+
+				}
+			}
+		}
+		System.out.println("Classifica");
+		for(int i=n-1; i >=0; i--) {
+			System.out.println(i+" :"+giocatori.get(classifica[i][0]).nome+" con "+ classifica[i][1]+" punti");
+		}
 
 	}
 }
