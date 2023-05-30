@@ -146,6 +146,7 @@ public class ObbComuni {
 
 		case 5: //funziona
 			int z=0;
+			int w=0;
 			if(libreria!=null) {
 				conta=0;
 				int [] piene= new int [5]; //5 perché numero max di colonne
@@ -189,12 +190,19 @@ public class ObbComuni {
 								}
 							}
 						}
+						if(z<4) {
+							w+=1;
+							
+						}
+						z=0;
+						 tipologia[0]=null;
+						  tipologia[1]=null;
+						  tipologia[2]=null;
 					}
+				}else {
+					realizzato=false;
 				}
-				else {
-					z=4; //se non ci sono almeno 3 colonne piene, non è realizzabile
-				}
-				if(z<4) {
+				if(w>2) {
 					realizzato=true;
 				}
 				else {
@@ -269,6 +277,7 @@ public class ObbComuni {
 
 		case 8: //funziona
 			int b=0;  //ragionamento simile alla quinta carta
+			int w1=0;
 			if(libreria!=null) {
 				conta=0;
 				int [] piene= new int [6];
@@ -312,17 +321,26 @@ public class ObbComuni {
 								}
 							}
 						}
+						if(b<4) {
+							w1+=1;
+							
+						}
+						b=0;
+						 tipologia[0]=null;
+						  tipologia[1]=null;
+						  tipologia[2]=null;
 					}
 				}
 				else {
-					b=4;
+					realizzato=false;
 				}
-				if(b<4) {
+				if(w1>2) {
 					realizzato=true;
 				}
 				else {
 					realizzato=false;
 				}
+				
 			}
 			break;
 
