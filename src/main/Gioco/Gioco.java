@@ -176,6 +176,7 @@ public class Gioco {
 			}
 		}
 		System.out.println("Fine gioco e ora si avvia conteggio");
+		System.out.println("");
 		Thread.sleep(1000);
 
 		for(int i=0; i<n; i++){
@@ -184,14 +185,17 @@ public class Gioco {
 			System.out.println();
 			if(giocatori.get(i).cartacomune1>0) {
 				System.out.println("Hai realizzato il primo obbiettivo comune per "+giocatori.get(i).cartacomune1);
+				System.out.println();
 			}
 			if(giocatori.get(i).cartacomune2>0) {
 				System.out.println("Hai realizzato il secondo obbiettivo comune per "+giocatori.get(i).cartacomune2);
+				System.out.println();
 			}
 			if(giocatori.get(i).fine==true) {
 				System.out.println("Hai finito per primo la libreria");
+				System.out.println();
 			}
-			System.out.println();
+			
 			giocatori.get(i).punti+=ObbPersonale.PuntiPersonali(Libreria.librerie.get(i));
 			System.out.println();
 		}

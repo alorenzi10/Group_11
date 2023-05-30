@@ -220,19 +220,19 @@ public class ObbComuni {
 							if(libreria[riga][colonna].toString().equals("Pink")) {
 								pink+=1;
 							}
-							if(libreria[riga][colonna].toString().equals("Blu")) {
+							else if(libreria[riga][colonna].toString().equals("Blue")) {
 								blu+=1;
 							}
-							if(libreria[riga][colonna].toString().equals("Lightblue")) {
+							else if(libreria[riga][colonna].toString().equals("LightBlue")) {
 								lightblue+=1;
 							}
-							if(libreria[riga][colonna].toString().equals("Yellow")) {
+							else if(libreria[riga][colonna].toString().equals("Yellow")) {
 								yellow+=1;
 							}
-							if(libreria[riga][colonna].toString().equals("Green")) {
+							else if(libreria[riga][colonna].toString().equals("Green")) {
 								green+=1;
 							}
-							if(libreria[riga][colonna].toString().equals("White")) {
+							else if(libreria[riga][colonna].toString().equals("White")) {
 								white+=1;
 							}
 						}
