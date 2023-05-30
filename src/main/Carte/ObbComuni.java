@@ -410,7 +410,7 @@ public class ObbComuni {
 		case 11: //funziona
 			int c=0;
 			if(libreria!=null) {
-				for(int riga=0; riga<5; riga++) {
+				for(int riga=0; riga<4; riga++) {
 					for(int colonna=0; colonna<3; colonna++) { //controlla figura, con limite su colonna e riga perché andrebbe fuori dalla libreria
 						if((libreria[riga][colonna]!=null && libreria[riga][colonna+2]!=null && libreria[riga+1][colonna+1]!=null && libreria[riga+2][colonna]!=null &&
 								libreria[riga+2][colonna+2]!=null)) {

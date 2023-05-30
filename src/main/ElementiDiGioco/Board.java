@@ -217,6 +217,7 @@ public class Board{
 			Board.StampaBoard();
 			boardfinita=Board.TesserePrendibili(); //controllo sulle tessere
 			if(boardfinita==0) { //se ha ritornato zero vuol dire che va sistemata
+				System.out.println("La tavola sistemata: ");
 				Board.BoardSetUp(ngiocatori);
 				Board.StampaBoard();
 				Thread.sleep(1000);
@@ -327,7 +328,7 @@ public class Board{
 					}
 					else {
 						
-					System.out.print("vuoi selezionare un altra tessera? 'no' per uscire, premere invio per continuare: " ); 
+					System.out.print("vuoi selezionare un altra tessera? 'no' per uscire, premere invio per continuare a selezionare: " ); 
 					risposta=input.nextLine();
 					if(risposta.equals("no")) {
 						fine=false; 
