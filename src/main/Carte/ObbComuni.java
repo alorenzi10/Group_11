@@ -334,7 +334,7 @@ public class ObbComuni {
 				else {
 					realizzato=false;
 				}
-				if(w1>2) {
+				if(w1>3) {
 					realizzato=true;
 				}
 				else {
