@@ -106,7 +106,6 @@ public class Board{
 				if(board[x][y]!=null) {
 					if(board[x+1][y]==null || board[x-1][y]==null || board[x][y+1]==null || board[x][y-1]==null) {
 						prendibili[x][y]=true; //tavola di verità con le cordinate delle tessere prendibili
-						//System.out.println("la tessera alla riga"+x+" e colonna "+y+" e' prendibile");
 						rimanenti+=1;
 					}
 				}
@@ -125,7 +124,7 @@ public class Board{
 		if(counter<1) {
 			System.out.println("Le tessere prendibili sono tutte singole bisogna sistemare la board");
 			Thread.sleep(1000);
-			return counter=0; 
+			return counter=0;  //se ritorna zero, ripristina la board con nuove tessere
 		}
 		return rimanenti; //per evitare che il giocatore quando prende tutte le tessere non provi a selezionarne un altra restando incastrato nell loop di scelta
 	}
@@ -153,7 +152,7 @@ public class Board{
 				for(int i=0; i<3; i++) {
 					uno[i]=selezionate[i][1];
 				}
-				for(int i=0; i < 3; i++){  
+				for(int i=0; i < 3; i++){  //bubble sort per mettere in ordine dal maggiore al minore 
 					for(int j=1; j < (3-i); j++){  
 						if(uno[j-1] > uno[j]){  
 							
@@ -164,7 +163,7 @@ public class Board{
 						}
 					}
 				}
-				if(uno[0]==(uno[1]-1) && uno[0]==(uno[2]-2)) {
+				if(uno[0]==(uno[1]-1) && uno[0]==(uno[2]-2)) { //verifica che sia (y)(x),(y)(x-1),(y)(x-2)
 					invalido=true;
 				}
 				else {
@@ -198,7 +197,7 @@ public class Board{
 					invalido=false;
 				}
 			}
-			else {
+			else { //se non hanno almeno le righe o le colonne uguali, non sono di sicuro allineate
 				System.out.println("Le tre tessere non sono allineate");
 				Thread.sleep(1000);
 				invalido=false;
@@ -213,11 +212,11 @@ public class Board{
 		boolean invalido=false;
 		int[][] cordinatescelte= new int[3][2];
 
-		do {//rinizio da capo se invalide tessere
+		do {//rinizio da capo se sono invalide le tessere
 
 			Board.StampaBoard();
-			boardfinita=Board.TesserePrendibili();
-			if(boardfinita==0) {
+			boardfinita=Board.TesserePrendibili(); //controllo sulle tessere
+			if(boardfinita==0) { //se ha ritornato zero vuol dire che va sistemata
 				Board.BoardSetUp(ngiocatori);
 				Board.StampaBoard();
 				Thread.sleep(1000);
@@ -350,8 +349,8 @@ public class Board{
 				System.out.println("Effettua nuovamente le scelte");
 				Thread.sleep(1000);
 			}else {
-				for(int i=0; i<3; i++) {
-					int a=cordinatescelte[i][0];
+				for(int i=0; i<3; i++) { //prende le tessere dalla board
+					int a=cordinatescelte[i][0]; 
 					int b=cordinatescelte[i][1];
 					board[a][b]=null;
 				}

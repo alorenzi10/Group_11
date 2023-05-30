@@ -18,11 +18,11 @@ public class Gioco {
 
 		Scanner input=new Scanner(System.in);
 
-		//Lettura numero di giocatori
+		
 		boolean userInt=false;
 		int n=0;
-		do { //aggiunto dopo
-			System.out.println("In quanti volete giocare? da 2 a 4");
+		do { 
+			System.out.println("In quanti volete giocare? da 2 a 4"); 
 			try {
 				n=Integer.parseInt(input.nextLine());
 				userInt=true;
@@ -33,14 +33,14 @@ public class Gioco {
 			}
 		}while(n<2 || n>4 || !userInt);
 
-		//Vengono creati i profili dei giocatori
+	
 		List<Player> giocatori= new ArrayList<Player>();
 		for(int i=0; i<n; i++) {
 			String nome=new String();
 			int cartaobb;
 			do {
 				userInt=true;
-				System.out.println("Inserisci nome del giocatore "+(1+i)+": ");
+				System.out.println("Inserisci nome del giocatore "+(1+i)+": "); 	//Vengono creati i profili dei giocatori
 				nome=input.nextLine();
 				if (nome.isBlank()  || nome.isEmpty()) {
 					System.out.println("Si prega di non inserire nomi vuoti");
@@ -81,7 +81,7 @@ public class Gioco {
 		int [] punticarta2= new int[4];
 		punticarta1[3]=8;
 		punticarta2[3]=8;
-		if(n==3) { //aggiungi token per ogni carta (ngiocatori) 4-8, 4-6-8, 2-4-6-8
+		if(n>2) { //aggiungi token per ogni carta (ngiocatori) 4-8, 4-6-8, 2-4-6-8
 			punticarta1[2]=6;
 			punticarta2[2]=6;
 			punticarta1[1]=4;
@@ -111,7 +111,7 @@ public class Gioco {
 		Thread.sleep(2000);
 		int turno=0;	
 		String risposta=new String();
-		int contaCComuni1=3; 
+		int contaCComuni1=3; //parte da token massimo
 		int contaCComuni2=3;
 		Board.Board(n); //set up Board;
 
@@ -197,14 +197,14 @@ public class Gioco {
 		}
 		int [][] classifica= new int [n][2];
 		for(int i=0; i<n; i++){
-			classifica[i][0]=i;
+			classifica[i][0]=i;							//classifica [numero giocatore][i suoi punti]
 			classifica[i][1]=giocatori.get(i).punti;
 		}
 		int temp = 0;  
 		int temp1=0;
 		for(int i=0; i < n; i++){  
 			for(int j=1; j < (n-i); j++){  
-				if(classifica[j-1][1] > classifica[j][1]){  
+				if(classifica[j-1][1] > classifica[j][1]){  //bubble sort in base a punti
 
 					temp = classifica[j-1][1];  
 					temp1=classifica[j-1][0];

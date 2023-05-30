@@ -6,11 +6,11 @@ public class Tiles {
 	
 	public static Tile[] tiles;
 	
-	public static void Inizializza() {				//per creare le tiles da riordinare
+	public static void Inizializza() {				//per creare le 132 tessere
 		tiles=new Tile[132];						
 		Tile.Color[] colors=Tile.Color.values();
 		int bagtiles=0;
-		for(int i=0; i<colors.length;i++) { //per ogni tipo 22 carte
+		for(int i=0; i<colors.length;i++) { //per ogni tipo(6) 22 carte
 			Tile.Color color=colors[i];
 			for(int n=0; n<22; n++) {
 				tiles[bagtiles]=new Tile (color);
